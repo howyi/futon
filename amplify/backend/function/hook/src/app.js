@@ -14,10 +14,12 @@ var apiFutonGraphQLAPIIdOutput = process.env.API_FUTON_GRAPHQLAPIIDOUTPUT
 
 Amplify Params - DO NOT EDIT */
 
-const AWS = require('aws-sdk')
-var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
-var bodyParser = require('body-parser')
-var express = require('express')
+const AWS = require('aws-sdk');
+var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
+var bodyParser = require('body-parser');
+var express = require('express');
+
+const uuidV4 = require('uuid/v4');
 
 var apiFutonGraphQLAPIIdOutput = process.env.API_FUTON_GRAPHQLAPIIDOUTPUT;
 
@@ -53,9 +55,10 @@ app.post('/*', function(req, res) {
   let putItemParams = {
     TableName: eventTableName,
     Item: {
-      id: 'xxxx',
+      id: uuidV4(),
       name: '仮',
-      raw: (req.body)
+      raw: (req.body),
+      createdAt: (new Date()).toISOString()
     }
   };
 
@@ -76,4 +79,4 @@ app.listen(3000, function() {
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
-module.exports = app
+module.exports = app;

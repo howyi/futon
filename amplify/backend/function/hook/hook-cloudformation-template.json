@@ -70,7 +70,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "futon-dev-20190608135957-deployment",
-					"S3Key": "amplify-builds/hook-1559988354-latest-build.zip"
+					"S3Key": "amplify-builds/hook-1559990957-latest-build.zip"
 				}
 			}
 		},
