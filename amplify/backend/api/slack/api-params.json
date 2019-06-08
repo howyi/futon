@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/slack",
+            "lambdaFunction": "slack",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "slack",
+    "apiName": "slack",
+    "functionArns": [
+        {
+            "lambdaFunction": "slack"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "futon-dev-20190608135957-authRole",
+        "unAuthRoleName": "futon-dev-20190608135957-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "slack",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

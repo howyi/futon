@@ -13,6 +13,20 @@
 					]
 				}
 			]
+		},
+		"slack": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "api",
+					"resourceName": "futon",
+					"attributes": [
+						"GraphQLAPIIdOutput"
+					]
+				}
+			]
 		}
 	},
 	"auth": {
@@ -36,6 +50,20 @@
 				{
 					"category": "function",
 					"resourceName": "hook",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		},
+		"slack": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "slack",
 					"attributes": [
 						"Name",
 						"Arn"
