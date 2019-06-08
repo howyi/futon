@@ -1,5 +1,11 @@
-type Todo @model {
+type Workspace @model {
   id: ID!
   name: String!
-  description: String
+  events: [Event!]!  @connection(name: "WorkspaceEvents", keyField: "workspaceId")
+}
+
+type Event @model {
+  id: ID!
+  workspace: Workspace! @connection(name: "WorkspaceEvents", keyField: "workspaceId")
+  raw: AWSJSON!
 }

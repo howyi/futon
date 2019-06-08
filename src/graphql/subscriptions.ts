@@ -1,27 +1,87 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = `subscription OnCreateTodo {
-  onCreateTodo {
+export const onCreateWorkspace = `subscription OnCreateWorkspace {
+  onCreateWorkspace {
     id
     name
-    description
+    events {
+      items {
+        id
+        raw
+      }
+      nextToken
+    }
   }
 }
 `;
-export const onUpdateTodo = `subscription OnUpdateTodo {
-  onUpdateTodo {
+export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
+  onUpdateWorkspace {
     id
     name
-    description
+    events {
+      items {
+        id
+        raw
+      }
+      nextToken
+    }
   }
 }
 `;
-export const onDeleteTodo = `subscription OnDeleteTodo {
-  onDeleteTodo {
+export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
+  onDeleteWorkspace {
     id
     name
-    description
+    events {
+      items {
+        id
+        raw
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const onCreateEvent = `subscription OnCreateEvent {
+  onCreateEvent {
+    id
+    workspace {
+      id
+      name
+      events {
+        nextToken
+      }
+    }
+    raw
+  }
+}
+`;
+export const onUpdateEvent = `subscription OnUpdateEvent {
+  onUpdateEvent {
+    id
+    workspace {
+      id
+      name
+      events {
+        nextToken
+      }
+    }
+    raw
+  }
+}
+`;
+export const onDeleteEvent = `subscription OnDeleteEvent {
+  onDeleteEvent {
+    id
+    workspace {
+      id
+      name
+      events {
+        nextToken
+      }
+    }
+    raw
   }
 }
 `;
