@@ -35,9 +35,9 @@ if(process.env.ENV && process.env.ENV !== "NONE") {
 }
 
 // declare a new express app
-var app = express()
-app.use(bodyParser.json())
-app.use(awsServerlessExpressMiddleware.eventContext())
+var app = express();
+app.use(bodyParser.json());
+app.use(awsServerlessExpressMiddleware.eventContext());
 
 // Enable CORS for all methods
 app.use(function(req, res, next) {
@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
   next()
 });
 
-app.post('/action-endpoint', function(req, res) {
+app.post('/slack/action-endpoint', function(req, res) {
   if ("challenge" in req.body) {
     res.json({challenge: req.body.challenge})
   }
@@ -71,14 +71,14 @@ app.post('/action-endpoint', function(req, res) {
   });
 });
 
-app.post('/options-load-endpoint', function(req, res) {
+app.post('/slack/options-load-endpoint', function(req, res) {
   if ("challenge" in req.body) {
     res.json({challenge: req.body.challenge})
   }
   res.json({load: true})
 });
 
-app.post('/command/*', function(req, res) {
+app.post('/slack/command', function(req, res) {
   if ("challenge" in req.body) {
     res.json({challenge: req.body.challenge})
   }
