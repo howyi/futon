@@ -1,15 +1,5 @@
 {
 	"function": {
-		"hello": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
-		},
-		"webhook": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
-		},
 		"hook": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
