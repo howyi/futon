@@ -1,0 +1,68 @@
+{
+    "identityPoolName": "futon6ad9360e_identitypool_6ad9360e",
+    "allowUnauthenticatedIdentities": false,
+    "lambdaLogPolicy": "futon6_6ad9360e_lambda_log_policy",
+    "openIdLambdaRoleName": "futon6_6ad9360e_openid_lambda_role",
+    "openIdRolePolicy": "futon6_6ad9360e_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "futon6_6ad9360e_openid_lambda_iam_policy",
+    "openIdLogPolicy": "futon6_6ad9360e_openid_lambda_log_policy",
+    "userPoolName": "futon6ad9360e_userpool_6ad9360e",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "futon66ad9360e_sns-role",
+    "roleExternalId": "futon66ad9360e_role_external_id",
+    "policyName": "futon66ad9360e-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientName": "futon66ad9360e_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "futon66ad9360e_totp_lambda_role",
+    "mfaLambdaLogPolicy": "futon66ad9360e_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "futon66ad9360e_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "futon66ad9360e_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "futon66ad9360e_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "futon66ad9360e_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "futon66ad9360e_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "futon6ad9360e",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "default"
+}

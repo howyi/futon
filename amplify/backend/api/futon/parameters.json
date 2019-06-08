@@ -1,0 +1,10 @@
+{
+    "AppSyncApiName": "futon",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authfuton6ad9360e",
+            "Outputs.UserPoolId"
+        ]
+    }
+}
