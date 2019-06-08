@@ -16,14 +16,6 @@
 			"build": true,
 			"dependsOn": [
 				{
-					"category": "storage",
-					"resourceName": "ddbb",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				},
-				{
 					"category": "api",
 					"resourceName": "futon",
 					"attributes": [
@@ -74,12 +66,6 @@
 					]
 				}
 			]
-		}
-	},
-	"storage": {
-		"ddbb": {
-			"service": "DynamoDB",
-			"providerPlugin": "awscloudformation"
 		}
 	}
 }

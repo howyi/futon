@@ -27,11 +27,9 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 let workspaceTableName = 'Workspace-' + apiFutonGraphQLAPIIdOutput;
 let eventTableName = 'Event-' + apiFutonGraphQLAPIIdOutput;
-let tableName = "ddbb";
 if(process.env.ENV && process.env.ENV !== "NONE") {
   workspaceTableName = workspaceTableName + '-' + process.env.ENV;
   eventTableName = eventTableName + '-' + process.env.ENV;
-  tableName = tableName + '-' + process.env.ENV;
 }
 
 // declare a new express app
