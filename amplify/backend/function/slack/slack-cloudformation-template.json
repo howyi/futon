@@ -70,7 +70,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "futon-dev-20190608135957-deployment",
-					"S3Key": "amplify-builds/slack-1559992464-latest-build.zip"
+					"S3Key": "amplify-builds/slack-1559994520-latest-build.zip"
 				}
 			}
 		},

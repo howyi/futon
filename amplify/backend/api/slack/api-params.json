@@ -1,7 +1,21 @@
 {
     "paths": [
         {
-            "name": "/slack",
+            "name": "/slack/action-endpoint",
+            "lambdaFunction": "slack",
+            "privacy": {
+                "open": true
+            }
+        },
+        {
+            "name": "/slack/options-load-endpoint",
+            "lambdaFunction": "slack",
+            "privacy": {
+                "open": true
+            }
+        },
+        {
+            "name": "/slack/command",
             "lambdaFunction": "slack",
             "privacy": {
                 "open": true

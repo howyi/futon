@@ -46,8 +46,7 @@ app.use(function(req, res, next) {
   next()
 });
 
-app.post('/action-endpoint/*', function(req, res) {
-
+app.post('/action-endpoint', function(req, res) {
   if ("challenge" in req.body) {
     res.json({challenge: req.body.challenge})
   }
@@ -70,6 +69,20 @@ app.post('/action-endpoint/*', function(req, res) {
       res.json({success: true})
     }
   });
+});
+
+app.post('/options-load-endpoint', function(req, res) {
+  if ("challenge" in req.body) {
+    res.json({challenge: req.body.challenge})
+  }
+  res.json({load: true})
+});
+
+app.post('/command/*', function(req, res) {
+  if ("challenge" in req.body) {
+    res.json({challenge: req.body.challenge})
+  }
+  res.json({load: true})
 });
 
 app.listen(3000, function() {
