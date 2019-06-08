@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/hook",
+            "lambdaFunction": "hook",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "hook",
+    "apiName": "hook",
+    "functionArns": [
+        {
+            "lambdaFunction": "hook"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "futon-dev-20190608135957-authRole",
+        "unAuthRoleName": "futon-dev-20190608135957-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "hook",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

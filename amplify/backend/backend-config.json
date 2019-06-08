@@ -9,6 +9,28 @@
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true
+		},
+		"hook": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "ddbb",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				},
+				{
+					"category": "api",
+					"resourceName": "futon",
+					"attributes": [
+						"GraphQLAPIIdOutput"
+					]
+				}
+			]
 		}
 	},
 	"auth": {
@@ -38,6 +60,26 @@
 					]
 				}
 			]
+		},
+		"hook": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "hook",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
+	},
+	"storage": {
+		"ddbb": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
 		}
 	}
 }
