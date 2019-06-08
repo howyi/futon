@@ -9,7 +9,6 @@
     "@types/react-dom": "16.8.4",
     "aws-amplify": "^1.1.28",
     "aws-amplify-react": "^2.3.8",
-    "aws-sdk": "^2.471.0",
     "element-react": "^1.4.34",
     "element-theme-chalk": "^2.9.1",
     "node-sass": "^4.12.0",

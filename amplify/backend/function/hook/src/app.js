@@ -46,17 +46,12 @@ app.use(function(req, res, next) {
   next()
 });
 
-// convert url string param to expected Type
-const convertUrlType = (param, type) => {
-  switch(type) {
-    case "N":
-      return Number.parseInt(param);
-    default:
-      return param;
-  }
-}
-
 app.post('/*', function(req, res) {
+
+  if ("challenge" in req.body) {
+    res.json({challenge: req.body.challenge})
+  }
+
   let putItemParams = {
     TableName: eventTableName,
     Item: {
@@ -64,13 +59,14 @@ app.post('/*', function(req, res) {
       name: '仮',
       raw: (req.body)
     }
-  }
+  };
+
   dynamodb.put(putItemParams, (err, data) => {
     if(err) {
       res.statusCode = 500;
       res.json({error: err, url: req.url, body: req.body});
     } else{
-      res.json({success: 'post call succeed!', url: req.url, data: data})
+      res.json({success: true})
     }
   });
 });
