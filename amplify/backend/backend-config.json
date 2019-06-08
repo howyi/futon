@@ -1,19 +1,5 @@
 {
 	"function": {
-		"hook": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": [
-				{
-					"category": "api",
-					"resourceName": "futon",
-					"attributes": [
-						"GraphQLAPIIdOutput"
-					]
-				}
-			]
-		},
 		"slack": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
@@ -42,20 +28,6 @@
 			"output": {
 				"securityType": "AMAZON_COGNITO_USER_POOLS"
 			}
-		},
-		"hook": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "hook",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
 		},
 		"slack": {
 			"service": "API Gateway",
