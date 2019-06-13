@@ -15,9 +15,7 @@ export const onCreateWorkspace = `subscription OnCreateWorkspace {
     ranks {
       items {
         id
-        slackUserId
-        emoji
-        count
+        reactions
       }
       nextToken
     }
@@ -38,9 +36,7 @@ export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
     ranks {
       items {
         id
-        slackUserId
-        emoji
-        count
+        reactions
       }
       nextToken
     }
@@ -61,9 +57,7 @@ export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
     ranks {
       items {
         id
-        slackUserId
-        emoji
-        count
+        reactions
       }
       nextToken
     }
@@ -134,9 +128,7 @@ export const onCreateRank = `subscription OnCreateRank {
         nextToken
       }
     }
-    slackUserId
-    emoji
-    count
+    reactions
   }
 }
 `;
@@ -153,9 +145,7 @@ export const onUpdateRank = `subscription OnUpdateRank {
         nextToken
       }
     }
-    slackUserId
-    emoji
-    count
+    reactions
   }
 }
 `;
@@ -172,9 +162,7 @@ export const onDeleteRank = `subscription OnDeleteRank {
         nextToken
       }
     }
-    slackUserId
-    emoji
-    count
+    reactions
   }
 }
 `;

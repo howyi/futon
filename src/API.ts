@@ -33,23 +33,18 @@ export type DeleteEventInput = {
 
 export type CreateRankInput = {
   id?: string | null,
-  slackUserId: string,
-  emoji: string,
-  count: number,
+  reactions: string,
   workspaceId: string,
 };
 
 export type UpdateRankInput = {
   id: string,
-  slackUserId: string,
-  emoji?: string | null,
-  count: number,
+  reactions?: string | null,
   workspaceId?: string | null,
 };
 
 export type DeleteRankInput = {
-  slackUserId: string,
-  count: number,
+  id?: string | null,
 };
 
 export type ModelWorkspaceFilterInput = {
@@ -94,35 +89,12 @@ export type ModelEventFilterInput = {
   not?: ModelEventFilterInput | null,
 };
 
-export type ModelIntKeyConditionInput = {
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-};
-
 export type ModelRankFilterInput = {
   id?: ModelIDFilterInput | null,
-  slackUserId?: ModelIDFilterInput | null,
-  emoji?: ModelStringFilterInput | null,
-  count?: ModelIntFilterInput | null,
+  reactions?: ModelStringFilterInput | null,
   and?: Array< ModelRankFilterInput | null > | null,
   or?: Array< ModelRankFilterInput | null > | null,
   not?: ModelRankFilterInput | null,
-};
-
-export type ModelIntFilterInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  contains?: number | null,
-  notContains?: number | null,
-  between?: Array< number | null > | null,
 };
 
 export type CreateWorkspaceMutationVariables = {
@@ -148,9 +120,7 @@ export type CreateWorkspaceMutation = {
       items:  Array< {
         __typename: "Rank",
         id: string,
-        slackUserId: string,
-        emoji: string,
-        count: number,
+        reactions: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -180,9 +150,7 @@ export type UpdateWorkspaceMutation = {
       items:  Array< {
         __typename: "Rank",
         id: string,
-        slackUserId: string,
-        emoji: string,
-        count: number,
+        reactions: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -212,9 +180,7 @@ export type DeleteWorkspaceMutation = {
       items:  Array< {
         __typename: "Rank",
         id: string,
-        slackUserId: string,
-        emoji: string,
-        count: number,
+        reactions: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -317,9 +283,7 @@ export type CreateRankMutation = {
         nextToken: string | null,
       } | null,
     },
-    slackUserId: string,
-    emoji: string,
-    count: number,
+    reactions: string,
   } | null,
 };
 
@@ -344,9 +308,7 @@ export type UpdateRankMutation = {
         nextToken: string | null,
       } | null,
     },
-    slackUserId: string,
-    emoji: string,
-    count: number,
+    reactions: string,
   } | null,
 };
 
@@ -371,9 +333,7 @@ export type DeleteRankMutation = {
         nextToken: string | null,
       } | null,
     },
-    slackUserId: string,
-    emoji: string,
-    count: number,
+    reactions: string,
   } | null,
 };
 
@@ -400,9 +360,7 @@ export type GetWorkspaceQuery = {
       items:  Array< {
         __typename: "Rank",
         id: string,
-        slackUserId: string,
-        emoji: string,
-        count: number,
+        reactions: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -484,8 +442,7 @@ export type ListEventsQuery = {
 };
 
 export type GetRankQueryVariables = {
-  slackUserId: string,
-  count: number,
+  id: string,
 };
 
 export type GetRankQuery = {
@@ -505,15 +462,11 @@ export type GetRankQuery = {
         nextToken: string | null,
       } | null,
     },
-    slackUserId: string,
-    emoji: string,
-    count: number,
+    reactions: string,
   } | null,
 };
 
 export type ListRanksQueryVariables = {
-  slackUserId?: string | null,
-  count?: ModelIntKeyConditionInput | null,
   filter?: ModelRankFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
@@ -530,9 +483,7 @@ export type ListRanksQuery = {
         id: string,
         token: string,
       },
-      slackUserId: string,
-      emoji: string,
-      count: number,
+      reactions: string,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -557,9 +508,7 @@ export type OnCreateWorkspaceSubscription = {
       items:  Array< {
         __typename: "Rank",
         id: string,
-        slackUserId: string,
-        emoji: string,
-        count: number,
+        reactions: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -585,9 +534,7 @@ export type OnUpdateWorkspaceSubscription = {
       items:  Array< {
         __typename: "Rank",
         id: string,
-        slackUserId: string,
-        emoji: string,
-        count: number,
+        reactions: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -613,9 +560,7 @@ export type OnDeleteWorkspaceSubscription = {
       items:  Array< {
         __typename: "Rank",
         id: string,
-        slackUserId: string,
-        emoji: string,
-        count: number,
+        reactions: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -702,9 +647,7 @@ export type OnCreateRankSubscription = {
         nextToken: string | null,
       } | null,
     },
-    slackUserId: string,
-    emoji: string,
-    count: number,
+    reactions: string,
   } | null,
 };
 
@@ -725,9 +668,7 @@ export type OnUpdateRankSubscription = {
         nextToken: string | null,
       } | null,
     },
-    slackUserId: string,
-    emoji: string,
-    count: number,
+    reactions: string,
   } | null,
 };
 
@@ -748,8 +689,6 @@ export type OnDeleteRankSubscription = {
         nextToken: string | null,
       } | null,
     },
-    slackUserId: string,
-    emoji: string,
-    count: number,
+    reactions: string,
   } | null,
 };

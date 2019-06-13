@@ -15,9 +15,7 @@ export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspace
     ranks {
       items {
         id
-        slackUserId
-        emoji
-        count
+        reactions
       }
       nextToken
     }
@@ -38,9 +36,7 @@ export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspace
     ranks {
       items {
         id
-        slackUserId
-        emoji
-        count
+        reactions
       }
       nextToken
     }
@@ -61,9 +57,7 @@ export const deleteWorkspace = `mutation DeleteWorkspace($input: DeleteWorkspace
     ranks {
       items {
         id
-        slackUserId
-        emoji
-        count
+        reactions
       }
       nextToken
     }
@@ -134,9 +128,7 @@ export const createRank = `mutation CreateRank($input: CreateRankInput!) {
         nextToken
       }
     }
-    slackUserId
-    emoji
-    count
+    reactions
   }
 }
 `;
@@ -153,9 +145,7 @@ export const updateRank = `mutation UpdateRank($input: UpdateRankInput!) {
         nextToken
       }
     }
-    slackUserId
-    emoji
-    count
+    reactions
   }
 }
 `;
@@ -172,9 +162,7 @@ export const deleteRank = `mutation DeleteRank($input: DeleteRankInput!) {
         nextToken
       }
     }
-    slackUserId
-    emoji
-    count
+    reactions
   }
 }
 `;

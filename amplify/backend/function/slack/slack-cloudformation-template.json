@@ -70,7 +70,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "futon-dev-20190608135957-deployment",
-					"S3Key": "amplify-builds/slack-1560416664-latest-build.zip"
+					"S3Key": "amplify-builds/slack-1560431526-latest-build.zip"
 				}
 			}
 		},
@@ -155,7 +155,9 @@
 						{
 							"Effect": "Allow",
 							"Action": [
-								"dynamodb:PutItem"
+								"dynamodb:PutItem",
+								"dynamodb:GetItem",
+								"dynamodb:UpdateItem"
 							],
 							"Resource": [
 								{
@@ -218,6 +220,43 @@
 															"-",
 															[
 																"Workspace",
+																{
+																	"Ref": "apifutonGraphQLAPIIdOutput"
+																},
+																{
+																	"Ref": "env"
+																}
+															]
+														]
+													}
+												]
+											}
+										}
+									]
+								},
+								{
+									"Fn::Sub": [
+										"arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+										{
+											"tablename": {
+												"Fn::If": [
+													"ShouldNotCreateEnvResources",
+													{
+														"Fn::Join": [
+															"-",
+															[
+																"Rank",
+																{
+																	"Ref": "apifutonGraphQLAPIIdOutput"
+																}
+															]
+														]
+													},
+													{
+														"Fn::Join": [
+															"-",
+															[
+																"Rank",
 																{
 																	"Ref": "apifutonGraphQLAPIIdOutput"
 																},

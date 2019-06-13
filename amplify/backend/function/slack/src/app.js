@@ -29,9 +29,11 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 let workspaceTableName = 'Workspace-' + apiFutonGraphQLAPIIdOutput;
 let eventTableName = 'Event-' + apiFutonGraphQLAPIIdOutput;
+let rankTableName = 'Rank-' + apiFutonGraphQLAPIIdOutput;
 if(process.env.ENV && process.env.ENV !== "NONE") {
   workspaceTableName = workspaceTableName + '-' + process.env.ENV;
   eventTableName = eventTableName + '-' + process.env.ENV;
+  rankTableName = rankTableName + '-' + process.env.ENV;
 }
 
 // declare a new express app
@@ -55,18 +57,100 @@ app.post('/slack/action-endpoint', function(req, res) {
     return res.json({success: false});
   }
 
+  let team_id = req.body.team_id;
+
   let now = (new Date()).toISOString();
 
   let event = req.body.event;
+  let reaction = {};
   switch(event.type) {
     case "reaction_added":
-      let fromUser = event.user;
-      let toUser = event.item_user;
-      console.log('addded');
-      console.log(fromUser);
-      console.log(toUser);
+
+      var params = {
+        TableName: rankTableName,
+        Key:{
+          id: team_id + '/' + event.item_user
+        }
+      };
+      reaction = event.reaction;
+      dynamodb.get(params, function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          let reactions = {
+            [reaction]: 0
+          };
+          console.log(reactions);
+          if ("Item" in data) {
+            reactions = data.Item.reactions;
+            if (reactions[reaction] === undefined) {
+              reactions[reaction] = 0;
+            }
+          }
+          reactions[reaction] = reactions[reaction] + 1;
+
+          let purRankIncItemParams = {
+            TableName: rankTableName,
+            Item: {
+              id: team_id + '/' + event.item_user,
+              workspaceId: req.body.team_id,
+              reactions: reactions,
+              createdAt: now
+            }
+          };
+
+          dynamodb.put(purRankIncItemParams, (err, data) => {
+            if(err) {
+              res.statusCode = 500;
+              return res.json({error: err, url: req.url, body: req.body});
+            }
+          });
+        }
+      });
+      break;
     case "reaction_removed":
-      console.log('removed')''
+      var params = {
+        TableName: rankTableName,
+        Key:{
+          id: team_id + '/' + event.item_user
+        }
+      };
+      reaction = event.reaction;
+      dynamodb.get(params, function(err, data){
+        if(err){
+          console.log(err);
+        } else {
+          let reactions = {
+            [reaction]: 0
+          };
+          console.log(reactions);
+          if ("Item" in data) {
+            reactions = data.Item.reactions;
+            if (reactions[reaction] === undefined) {
+              reactions[reaction] = 0;
+            }
+          }
+          reactions[reaction] = reactions[reaction] - 1;
+
+          let purRankIncItemParams = {
+            TableName: rankTableName,
+            Item: {
+              id: team_id + '/' + event.item_user,
+              workspaceId: req.body.team_id,
+              reactions: reactions,
+              createdAt: now
+            }
+          };
+
+          dynamodb.put(purRankIncItemParams, (err, data) => {
+            if(err) {
+              res.statusCode = 500;
+              return res.json({error: err, url: req.url, body: req.body});
+            }
+          });
+        }
+      });
+      break;
   }
 
   let putWorkspaceItemParams = {

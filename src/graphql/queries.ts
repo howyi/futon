@@ -15,9 +15,7 @@ export const getWorkspace = `query GetWorkspace($id: ID!) {
     ranks {
       items {
         id
-        slackUserId
-        emoji
-        count
+        reactions
       }
       nextToken
     }
@@ -79,8 +77,8 @@ export const listEvents = `query ListEvents(
   }
 }
 `;
-export const getRank = `query GetRank($slackUserId: ID!, $count: Int!) {
-  getRank(slackUserId: $slackUserId, count: $count) {
+export const getRank = `query GetRank($id: ID!) {
+  getRank(id: $id) {
     id
     workspace {
       id
@@ -92,35 +90,23 @@ export const getRank = `query GetRank($slackUserId: ID!, $count: Int!) {
         nextToken
       }
     }
-    slackUserId
-    emoji
-    count
+    reactions
   }
 }
 `;
 export const listRanks = `query ListRanks(
-  $slackUserId: ID
-  $count: ModelIntKeyConditionInput
   $filter: ModelRankFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listRanks(
-    slackUserId: $slackUserId
-    count: $count
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
+  listRanks(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       workspace {
         id
         token
       }
-      slackUserId
-      emoji
-      count
+      reactions
     }
     nextToken
   }
