@@ -2,6 +2,7 @@ type Workspace @model {
   id: ID!
   token: String!
   events: [Event!]!  @connection(name: "WorkspaceEvents", keyField: "workspaceId")
+  ranks: [Rank!]!  @connection(name: "WorkspaceRanks", keyField: "workspaceId")
 }
 
 type Event @model {
@@ -10,8 +11,9 @@ type Event @model {
   raw: AWSJSON!
 }
 
-type Rank @model {
+type Rank @model @key(fields: ["slackUserId", "count"]) {
   id: ID!
+  workspace: Workspace! @connection(name: "WorkspaceRanks", keyField: "workspaceId")
   slackUserId: ID!
   emoji: String!
   count: Int!

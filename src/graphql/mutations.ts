@@ -12,6 +12,15 @@ export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspace
       }
       nextToken
     }
+    ranks {
+      items {
+        id
+        slackUserId
+        emoji
+        count
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -23,6 +32,15 @@ export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspace
       items {
         id
         raw
+      }
+      nextToken
+    }
+    ranks {
+      items {
+        id
+        slackUserId
+        emoji
+        count
       }
       nextToken
     }
@@ -40,6 +58,15 @@ export const deleteWorkspace = `mutation DeleteWorkspace($input: DeleteWorkspace
       }
       nextToken
     }
+    ranks {
+      items {
+        id
+        slackUserId
+        emoji
+        count
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -50,6 +77,9 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
       id
       token
       events {
+        nextToken
+      }
+      ranks {
         nextToken
       }
     }
@@ -66,6 +96,9 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
       events {
         nextToken
       }
+      ranks {
+        nextToken
+      }
     }
     raw
   }
@@ -80,6 +113,9 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
       events {
         nextToken
       }
+      ranks {
+        nextToken
+      }
     }
     raw
   }
@@ -88,6 +124,16 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
 export const createRank = `mutation CreateRank($input: CreateRankInput!) {
   createRank(input: $input) {
     id
+    workspace {
+      id
+      token
+      events {
+        nextToken
+      }
+      ranks {
+        nextToken
+      }
+    }
     slackUserId
     emoji
     count
@@ -97,6 +143,16 @@ export const createRank = `mutation CreateRank($input: CreateRankInput!) {
 export const updateRank = `mutation UpdateRank($input: UpdateRankInput!) {
   updateRank(input: $input) {
     id
+    workspace {
+      id
+      token
+      events {
+        nextToken
+      }
+      ranks {
+        nextToken
+      }
+    }
     slackUserId
     emoji
     count
@@ -106,6 +162,16 @@ export const updateRank = `mutation UpdateRank($input: UpdateRankInput!) {
 export const deleteRank = `mutation DeleteRank($input: DeleteRankInput!) {
   deleteRank(input: $input) {
     id
+    workspace {
+      id
+      token
+      events {
+        nextToken
+      }
+      ranks {
+        nextToken
+      }
+    }
     slackUserId
     emoji
     count

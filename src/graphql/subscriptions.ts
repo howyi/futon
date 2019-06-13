@@ -12,6 +12,15 @@ export const onCreateWorkspace = `subscription OnCreateWorkspace {
       }
       nextToken
     }
+    ranks {
+      items {
+        id
+        slackUserId
+        emoji
+        count
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -23,6 +32,15 @@ export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
       items {
         id
         raw
+      }
+      nextToken
+    }
+    ranks {
+      items {
+        id
+        slackUserId
+        emoji
+        count
       }
       nextToken
     }
@@ -40,6 +58,15 @@ export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
       }
       nextToken
     }
+    ranks {
+      items {
+        id
+        slackUserId
+        emoji
+        count
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -50,6 +77,9 @@ export const onCreateEvent = `subscription OnCreateEvent {
       id
       token
       events {
+        nextToken
+      }
+      ranks {
         nextToken
       }
     }
@@ -66,6 +96,9 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
       events {
         nextToken
       }
+      ranks {
+        nextToken
+      }
     }
     raw
   }
@@ -80,6 +113,9 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
       events {
         nextToken
       }
+      ranks {
+        nextToken
+      }
     }
     raw
   }
@@ -88,6 +124,16 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
 export const onCreateRank = `subscription OnCreateRank {
   onCreateRank {
     id
+    workspace {
+      id
+      token
+      events {
+        nextToken
+      }
+      ranks {
+        nextToken
+      }
+    }
     slackUserId
     emoji
     count
@@ -97,6 +143,16 @@ export const onCreateRank = `subscription OnCreateRank {
 export const onUpdateRank = `subscription OnUpdateRank {
   onUpdateRank {
     id
+    workspace {
+      id
+      token
+      events {
+        nextToken
+      }
+      ranks {
+        nextToken
+      }
+    }
     slackUserId
     emoji
     count
@@ -106,6 +162,16 @@ export const onUpdateRank = `subscription OnUpdateRank {
 export const onDeleteRank = `subscription OnDeleteRank {
   onDeleteRank {
     id
+    workspace {
+      id
+      token
+      events {
+        nextToken
+      }
+      ranks {
+        nextToken
+      }
+    }
     slackUserId
     emoji
     count
