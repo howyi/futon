@@ -9,3 +9,10 @@ type Event @model {
   workspace: Workspace! @connection(name: "WorkspaceEvents", keyField: "workspaceId")
   raw: AWSJSON!
 }
+
+type Rank @model {
+  id: ID!
+  slackUserId: ID!
+  emoji: String!
+  count: Int!
+}

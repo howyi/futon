@@ -57,6 +57,18 @@ app.post('/slack/action-endpoint', function(req, res) {
 
   let now = (new Date()).toISOString();
 
+  let event = req.body.event;
+  switch(event.type) {
+    case "reaction_added":
+      let fromUser = event.user;
+      let toUser = event.item_user;
+      console.log('addded');
+      console.log(fromUser);
+      console.log(toUser);
+    case "reaction_removed":
+      console.log('removed')''
+  }
+
   let putWorkspaceItemParams = {
     TableName: workspaceTableName,
     Item: {

@@ -4,7 +4,7 @@
 export const onCreateWorkspace = `subscription OnCreateWorkspace {
   onCreateWorkspace {
     id
-    name
+    token
     events {
       items {
         id
@@ -18,7 +18,7 @@ export const onCreateWorkspace = `subscription OnCreateWorkspace {
 export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
   onUpdateWorkspace {
     id
-    name
+    token
     events {
       items {
         id
@@ -32,7 +32,7 @@ export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
 export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
   onDeleteWorkspace {
     id
-    name
+    token
     events {
       items {
         id
@@ -48,7 +48,7 @@ export const onCreateEvent = `subscription OnCreateEvent {
     id
     workspace {
       id
-      name
+      token
       events {
         nextToken
       }
@@ -62,7 +62,7 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
     id
     workspace {
       id
-      name
+      token
       events {
         nextToken
       }
@@ -76,12 +76,39 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
     id
     workspace {
       id
-      name
+      token
       events {
         nextToken
       }
     }
     raw
+  }
+}
+`;
+export const onCreateRank = `subscription OnCreateRank {
+  onCreateRank {
+    id
+    slackUserId
+    emoji
+    count
+  }
+}
+`;
+export const onUpdateRank = `subscription OnUpdateRank {
+  onUpdateRank {
+    id
+    slackUserId
+    emoji
+    count
+  }
+}
+`;
+export const onDeleteRank = `subscription OnDeleteRank {
+  onDeleteRank {
+    id
+    slackUserId
+    emoji
+    count
   }
 }
 `;

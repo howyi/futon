@@ -3,12 +3,12 @@
 
 export type CreateWorkspaceInput = {
   id?: string | null,
-  name: string,
+  token: string,
 };
 
 export type UpdateWorkspaceInput = {
   id: string,
-  name?: string | null,
+  token?: string | null,
 };
 
 export type DeleteWorkspaceInput = {
@@ -31,9 +31,27 @@ export type DeleteEventInput = {
   id?: string | null,
 };
 
+export type CreateRankInput = {
+  id?: string | null,
+  slackUserId: string,
+  emoji: string,
+  count: number,
+};
+
+export type UpdateRankInput = {
+  id: string,
+  slackUserId?: string | null,
+  emoji?: string | null,
+  count?: number | null,
+};
+
+export type DeleteRankInput = {
+  id?: string | null,
+};
+
 export type ModelWorkspaceFilterInput = {
   id?: ModelIDFilterInput | null,
-  name?: ModelStringFilterInput | null,
+  token?: ModelStringFilterInput | null,
   and?: Array< ModelWorkspaceFilterInput | null > | null,
   or?: Array< ModelWorkspaceFilterInput | null > | null,
   not?: ModelWorkspaceFilterInput | null,
@@ -73,6 +91,28 @@ export type ModelEventFilterInput = {
   not?: ModelEventFilterInput | null,
 };
 
+export type ModelRankFilterInput = {
+  id?: ModelIDFilterInput | null,
+  slackUserId?: ModelIDFilterInput | null,
+  emoji?: ModelStringFilterInput | null,
+  count?: ModelIntFilterInput | null,
+  and?: Array< ModelRankFilterInput | null > | null,
+  or?: Array< ModelRankFilterInput | null > | null,
+  not?: ModelRankFilterInput | null,
+};
+
+export type ModelIntFilterInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  contains?: number | null,
+  notContains?: number | null,
+  between?: Array< number | null > | null,
+};
+
 export type CreateWorkspaceMutationVariables = {
   input: CreateWorkspaceInput,
 };
@@ -81,7 +121,7 @@ export type CreateWorkspaceMutation = {
   createWorkspace:  {
     __typename: "Workspace",
     id: string,
-    name: string,
+    token: string,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -102,7 +142,7 @@ export type UpdateWorkspaceMutation = {
   updateWorkspace:  {
     __typename: "Workspace",
     id: string,
-    name: string,
+    token: string,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -123,7 +163,7 @@ export type DeleteWorkspaceMutation = {
   deleteWorkspace:  {
     __typename: "Workspace",
     id: string,
-    name: string,
+    token: string,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -147,7 +187,7 @@ export type CreateEventMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      name: string,
+      token: string,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -168,7 +208,7 @@ export type UpdateEventMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      name: string,
+      token: string,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -189,13 +229,55 @@ export type DeleteEventMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      name: string,
+      token: string,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
       } | null,
     },
     raw: string,
+  } | null,
+};
+
+export type CreateRankMutationVariables = {
+  input: CreateRankInput,
+};
+
+export type CreateRankMutation = {
+  createRank:  {
+    __typename: "Rank",
+    id: string,
+    slackUserId: string,
+    emoji: string,
+    count: number,
+  } | null,
+};
+
+export type UpdateRankMutationVariables = {
+  input: UpdateRankInput,
+};
+
+export type UpdateRankMutation = {
+  updateRank:  {
+    __typename: "Rank",
+    id: string,
+    slackUserId: string,
+    emoji: string,
+    count: number,
+  } | null,
+};
+
+export type DeleteRankMutationVariables = {
+  input: DeleteRankInput,
+};
+
+export type DeleteRankMutation = {
+  deleteRank:  {
+    __typename: "Rank",
+    id: string,
+    slackUserId: string,
+    emoji: string,
+    count: number,
   } | null,
 };
 
@@ -207,7 +289,7 @@ export type GetWorkspaceQuery = {
   getWorkspace:  {
     __typename: "Workspace",
     id: string,
-    name: string,
+    token: string,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -232,7 +314,7 @@ export type ListWorkspacesQuery = {
     items:  Array< {
       __typename: "Workspace",
       id: string,
-      name: string,
+      token: string,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -253,7 +335,7 @@ export type GetEventQuery = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      name: string,
+      token: string,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -278,9 +360,43 @@ export type ListEventsQuery = {
       workspace:  {
         __typename: "Workspace",
         id: string,
-        name: string,
+        token: string,
       },
       raw: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetRankQueryVariables = {
+  id: string,
+};
+
+export type GetRankQuery = {
+  getRank:  {
+    __typename: "Rank",
+    id: string,
+    slackUserId: string,
+    emoji: string,
+    count: number,
+  } | null,
+};
+
+export type ListRanksQueryVariables = {
+  filter?: ModelRankFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListRanksQuery = {
+  listRanks:  {
+    __typename: "ModelRankConnection",
+    items:  Array< {
+      __typename: "Rank",
+      id: string,
+      slackUserId: string,
+      emoji: string,
+      count: number,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -290,7 +406,7 @@ export type OnCreateWorkspaceSubscription = {
   onCreateWorkspace:  {
     __typename: "Workspace",
     id: string,
-    name: string,
+    token: string,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -307,7 +423,7 @@ export type OnUpdateWorkspaceSubscription = {
   onUpdateWorkspace:  {
     __typename: "Workspace",
     id: string,
-    name: string,
+    token: string,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -324,7 +440,7 @@ export type OnDeleteWorkspaceSubscription = {
   onDeleteWorkspace:  {
     __typename: "Workspace",
     id: string,
-    name: string,
+    token: string,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -344,7 +460,7 @@ export type OnCreateEventSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      name: string,
+      token: string,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -361,7 +477,7 @@ export type OnUpdateEventSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      name: string,
+      token: string,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -378,12 +494,42 @@ export type OnDeleteEventSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      name: string,
+      token: string,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
       } | null,
     },
     raw: string,
+  } | null,
+};
+
+export type OnCreateRankSubscription = {
+  onCreateRank:  {
+    __typename: "Rank",
+    id: string,
+    slackUserId: string,
+    emoji: string,
+    count: number,
+  } | null,
+};
+
+export type OnUpdateRankSubscription = {
+  onUpdateRank:  {
+    __typename: "Rank",
+    id: string,
+    slackUserId: string,
+    emoji: string,
+    count: number,
+  } | null,
+};
+
+export type OnDeleteRankSubscription = {
+  onDeleteRank:  {
+    __typename: "Rank",
+    id: string,
+    slackUserId: string,
+    emoji: string,
+    count: number,
   } | null,
 };

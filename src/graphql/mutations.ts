@@ -4,7 +4,7 @@
 export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspaceInput!) {
   createWorkspace(input: $input) {
     id
-    name
+    token
     events {
       items {
         id
@@ -18,7 +18,7 @@ export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspace
 export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspaceInput!) {
   updateWorkspace(input: $input) {
     id
-    name
+    token
     events {
       items {
         id
@@ -32,7 +32,7 @@ export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspace
 export const deleteWorkspace = `mutation DeleteWorkspace($input: DeleteWorkspaceInput!) {
   deleteWorkspace(input: $input) {
     id
-    name
+    token
     events {
       items {
         id
@@ -48,7 +48,7 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
     id
     workspace {
       id
-      name
+      token
       events {
         nextToken
       }
@@ -62,7 +62,7 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
     id
     workspace {
       id
-      name
+      token
       events {
         nextToken
       }
@@ -76,12 +76,39 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
     id
     workspace {
       id
-      name
+      token
       events {
         nextToken
       }
     }
     raw
+  }
+}
+`;
+export const createRank = `mutation CreateRank($input: CreateRankInput!) {
+  createRank(input: $input) {
+    id
+    slackUserId
+    emoji
+    count
+  }
+}
+`;
+export const updateRank = `mutation UpdateRank($input: UpdateRankInput!) {
+  updateRank(input: $input) {
+    id
+    slackUserId
+    emoji
+    count
+  }
+}
+`;
+export const deleteRank = `mutation DeleteRank($input: DeleteRankInput!) {
+  deleteRank(input: $input) {
+    id
+    slackUserId
+    emoji
+    count
   }
 }
 `;
