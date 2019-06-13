@@ -56,7 +56,7 @@ export const listEvents = `query ListEvents(
       id
       workspace {
         id
-        name
+        token
       }
       raw
     }

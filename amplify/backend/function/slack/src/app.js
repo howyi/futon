@@ -48,25 +48,48 @@ app.use(function(req, res, next) {
 
 app.post('/slack/action-endpoint', function(req, res) {
   if ("challenge" in req.body) {
-    res.json({challenge: req.body.challenge})
+    return res.json({challenge: req.body.challenge})
   }
 
-  let putItemParams = {
-    TableName: eventTableName,
+  if (!("team_id" in req.body && "token" in req.body)) {
+    return res.json({success: false});
+  }
+
+  let now = (new Date()).toISOString();
+
+  let putWorkspaceItemParams = {
+    TableName: workspaceTableName,
     Item: {
-      id: uuidV4(),
-      name: '仮',
-      raw: (req.body),
-      createdAt: (new Date()).toISOString()
+      id: req.body.team_id,
+      token: req.body.token,
+      createdAt: now
     }
   };
 
-  dynamodb.put(putItemParams, (err, data) => {
+  dynamodb.put(putWorkspaceItemParams, (err, data) => {
     if(err) {
       res.statusCode = 500;
-      res.json({error: err, url: req.url, body: req.body});
-    } else{
-      res.json({success: true})
+      return res.json({error: err, url: req.url, body: req.body});
+    }
+  });
+
+  let putEventItemParams = {
+    TableName: eventTableName,
+    Item: {
+      id: uuidV4(),
+      workspaceId: req.body.team_id,
+      raw: (req.body),
+      createdAt: now
+    }
+  };
+
+  dynamodb.put(putEventItemParams, (err, data) => {
+    if(err) {
+      res.statusCode = 500;
+      console.log(err);
+      return res.json({error: err, url: req.url, body: req.body});
+    } else {
+      return res.json({success: true})
     }
   });
 });

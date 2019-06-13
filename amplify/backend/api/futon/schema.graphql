@@ -1,6 +1,6 @@
 type Workspace @model {
   id: ID!
-  name: String!
+  token: String!
   events: [Event!]!  @connection(name: "WorkspaceEvents", keyField: "workspaceId")
 }
 

@@ -70,7 +70,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "futon-dev-20190608135957-deployment",
-					"S3Key": "amplify-builds/slack-1560006276-latest-build.zip"
+					"S3Key": "amplify-builds/slack-1560413943-latest-build.zip"
 				}
 			}
 		},
@@ -181,6 +181,43 @@
 															"-",
 															[
 																"Event",
+																{
+																	"Ref": "apifutonGraphQLAPIIdOutput"
+																},
+																{
+																	"Ref": "env"
+																}
+															]
+														]
+													}
+												]
+											}
+										}
+									]
+								},
+								{
+									"Fn::Sub": [
+										"arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+										{
+											"tablename": {
+												"Fn::If": [
+													"ShouldNotCreateEnvResources",
+													{
+														"Fn::Join": [
+															"-",
+															[
+																"Workspace",
+																{
+																	"Ref": "apifutonGraphQLAPIIdOutput"
+																}
+															]
+														]
+													},
+													{
+														"Fn::Join": [
+															"-",
+															[
+																"Workspace",
 																{
 																	"Ref": "apifutonGraphQLAPIIdOutput"
 																},
