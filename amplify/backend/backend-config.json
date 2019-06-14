@@ -17,7 +17,16 @@
 		"getWorkspaceCache": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
-			"build": true
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "api",
+					"resourceName": "futon",
+					"attributes": [
+						"GraphQLAPIIdOutput"
+					]
+				}
+			]
 		}
 	},
 	"auth": {
