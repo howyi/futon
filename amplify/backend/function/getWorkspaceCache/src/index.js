@@ -6,5 +6,8 @@ var region = process.env.REGION
 Amplify Params - DO NOT EDIT */
 
 exports.handler = function (event, context) { //eslint-disable-line
-  context.done(null, event.arguments.msg);
+  console.log(event.arguments);
+  let workspaceId = event.arguments.workspaceId;
+
+  context.done(null, event.arguments.workspaceId);
 };

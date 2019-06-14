@@ -18,5 +18,5 @@ type Rank @model {
 }
 
 type Query {
-  echo(msg: String): String @function(name: "getWorkspaceCache-${env}")
+  echo(workspaceId: String): String @function(name: "getWorkspaceCache-${env}")
 }
