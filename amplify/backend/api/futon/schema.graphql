@@ -16,3 +16,7 @@ type Rank @model {
   workspace: Workspace! @connection(name: "WorkspaceRanks", keyField: "workspaceId")
   reactions: AWSJSON!
 }
+
+type Query {
+  echo(msg: String): String @function(name: "getWorkspaceCache-${env}")
+}

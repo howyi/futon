@@ -1,9 +1,10 @@
-const awsServerlessExpress = require('aws-serverless-express');
-const app = require('./app');
+/* Amplify Params - DO NOT EDIT
+You can access the following resource attributes as environment variables from your Lambda function
+var environment = process.env.ENV
+var region = process.env.REGION
 
-const server = awsServerlessExpress.createServer(app);
+Amplify Params - DO NOT EDIT */
 
-exports.handler = (event, context) => {
-  console.log(`EVENT: ${JSON.stringify(event)}`);
-  awsServerlessExpress.proxy(server, event, context);
+exports.handler = function (event, context) { //eslint-disable-line
+  context.done(null, event.arguments.msg);
 };

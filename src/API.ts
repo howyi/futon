@@ -337,6 +337,14 @@ export type DeleteRankMutation = {
   } | null,
 };
 
+export type EchoQueryVariables = {
+  msg?: string | null,
+};
+
+export type EchoQuery = {
+  echo: string | null,
+};
+
 export type GetWorkspaceQueryVariables = {
   id: string,
 };
