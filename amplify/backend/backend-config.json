@@ -13,6 +13,11 @@
 					]
 				}
 			]
+		},
+		"getWorkspaceCache": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
 		}
 	},
 	"auth": {
