@@ -10,6 +10,8 @@ var apiFutonGraphQLAPIIdOutput = process.env.API_FUTON_GRAPHQLAPIIDOUTPUT;
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
+const { WebClient } = require('@slack/web-api');
+
 let workspaceTableName = 'Workspace-' + apiFutonGraphQLAPIIdOutput;
 if(process.env.ENV && process.env.ENV !== "NONE") {
   workspaceTableName = workspaceTableName + '-' + process.env.ENV;
@@ -32,7 +34,14 @@ exports.handler = function (event, context) { //eslint-disable-line
       console.log(err);
     } else {
       console.log(data);
+
+      // let slack = new WebClient(data.Item.token);
+      //
+      // (async () => {
+      //   const res = await slack.team.info();
+      //   console.log('INFO: ', res.ts);
+      //   context.done(null, event.arguments.workspaceId);
+      // })();
     }
-    context.done(null, event.arguments.workspaceId);
   });
 };

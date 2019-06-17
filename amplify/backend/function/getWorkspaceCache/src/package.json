@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@slack/web-api": "^5.0.1",
     "aws-sdk": "^2.475.0"
   }
 }
