@@ -69,8 +69,8 @@
 				"Runtime": "nodejs8.10",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "futon-dev-20190608135957-deployment",
-					"S3Key": "amplify-builds/slack-1560431526-latest-build.zip"
+					"S3Bucket": "futon-ft-20190618204653-deployment",
+					"S3Key": "amplify-builds/slack-1560858816-latest-build.zip"
 				}
 			}
 		},
