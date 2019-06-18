@@ -69,8 +69,8 @@
 				"Runtime": "nodejs8.10",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "futon-dev-20190608135957-deployment",
-					"S3Key": "amplify-builds/getWorkspaceCache-1560568396-latest-build.zip"
+					"S3Bucket": "futon-ft-20190618204653-deployment",
+					"S3Key": "amplify-builds/getWorkspaceCache-1560858817-latest-build.zip"
 				}
 			}
 		},
@@ -275,6 +275,15 @@
 						}
 					]
 				}
+			}
+		},
+		"SlackToken": {
+			"Type": "AWS::SSM::Parameter",
+			"Properties": {
+				"Name": "SlackToken",
+				"Type": "String",
+				"Value": "xoxp-XXXX",
+				"Description": "Slack API Token"
 			}
 		}
 	},
