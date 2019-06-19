@@ -6,6 +6,7 @@ var region = process.env.REGION
 Amplify Params - DO NOT EDIT */
 
 const AWS = require('aws-sdk');
+const SSM = new AWS.SSM();
 var apiFutonGraphQLAPIIdOutput = process.env.API_FUTON_GRAPHQLAPIIDOUTPUT;
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -17,7 +18,7 @@ if(process.env.ENV && process.env.ENV !== "NONE") {
   workspaceTableName = workspaceTableName + '-' + process.env.ENV;
 }
 
-exports.handler = function (event, context) { //eslint-disable-line
+exports.handler = async function (event, context) { //eslint-disable-line
   console.log(event.arguments);
   let workspaceId = event.arguments.workspaceId;
 
@@ -29,7 +30,16 @@ exports.handler = function (event, context) { //eslint-disable-line
   };
   console.log(params);
 
+  let parameter = await SSM.getParameter({Name: "SlackToken"}).promise();
+  let token = parameter.Parameter.Value;
+  let slack = new WebClient(token);
+
+  const res = await slack.team.info();
+  console.log(res);
+
+  console.log('qqqq');
   dynamodb.get(params, function(err, data) {
+    console.log('fffff');
     if (err) {
       console.log(err);
     } else {
@@ -43,5 +53,6 @@ exports.handler = function (event, context) { //eslint-disable-line
       //   context.done(null, event.arguments.workspaceId);
       // })();
     }
+    console.log('zzzzz');
   });
 };
