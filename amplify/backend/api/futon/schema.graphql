@@ -1,6 +1,9 @@
 type Workspace @model {
   id: ID!
-  token: String!
+  accessToken: String!
+  scope: String!
+  botUserId: String!
+  botAccessToken: String!
   events: [Event!]! @connection(name: "WorkspaceEvents", keyField: "workspaceId")
   ranks: [Rank!]! @connection(name: "WorkspaceRanks", keyField: "workspaceId")
 }

@@ -22,10 +22,17 @@ const { WebClient } = require('@slack/web-api');
 
 const AWS = require('aws-sdk');
 const SSM = new AWS.SSM();
+const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 var express = require('express');
 var bodyParser = require('body-parser');
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
+
+var apiFutonGraphQLAPIIdOutput = process.env.API_FUTON_GRAPHQLAPIIDOUTPUT;
+let workspaceTableName = 'Workspace-' + apiFutonGraphQLAPIIdOutput;
+if(process.env.ENV && process.env.ENV !== "NONE") {
+    workspaceTableName = workspaceTableName + '-' + process.env.ENV;
+}
 
 // declare a new express app
 var app = express();
@@ -40,6 +47,10 @@ app.use(function(req, res, next) {
 });
 
 app.get('/slack-authorize/callback', async function(req, res) {
+    if ("error" in req.query && req.query.error === 'access_denied') {
+        return res.redirect('https://www.bing.com/');
+    }
+
     const slack = new WebClient();
 
     const code = req.query.code;
@@ -53,28 +64,38 @@ app.get('/slack-authorize/callback', async function(req, res) {
     }
     redirect_uri += '/slack-authorize/callback';
 
-    const response = await slack.oauth.access({
+    const slackData = await slack.oauth.access({
         client_id: client_id,
         client_secret: client_secret,
         code: code,
         redirect_uri: redirect_uri
     });
 
-    console.log(response.access_token);
-    console.log(response.scope);
-    console.log(response.user_id);
-    console.log(response.team_id);
-    console.log(response.bot_user_id);
-    console.log(response.bot_access_token);
-    res.json({success: 'callback succeed!', response})
+    const now = (new Date()).toISOString();
+
+    let putWorkspaceItemParams = {
+        TableName: workspaceTableName,
+        Item: {
+            id: slackData.team_id,
+            accessToken: slackData.access_token,
+            scope: slackData.scope,
+            botUserId: slackData.bot.bot_user_id,
+            botAccessToken: slackData.bot.bot_access_token,
+            createdAt: now
+        }
+    };
+
+    console.log(putWorkspaceItemParams);
+
+    await dynamodb.put(putWorkspaceItemParams).promise().catch((err) => {
+        res.statusCode = 500;
+        return res.json({error: err, url: req.url, body: req.body});
+    });
+
+    res.redirect(req.query.state);
 });
 
 app.get('/slack-authorize', async function(req, res) {
-  // Add your code here
-  // res.json({success: 'get call succeed!', url: req.url})
-  // console.log(req.protocol);
-  // console.log(req.hostname);
-  // console.log(req.originalUrl);
   let redirect_uri = req.protocol + '://' + req.hostname;
   if (environment !== '') {
       redirect_uri += '/' + environment
@@ -106,7 +127,8 @@ app.get('/slack-authorize', async function(req, res) {
           'commands',
           'bot',
       ],
-      redirect_uri: redirect_uri
+      redirect_uri: redirect_uri,
+      state: 'https://www.google.com/'
   });
 
   res.redirect(url + '?' + query)

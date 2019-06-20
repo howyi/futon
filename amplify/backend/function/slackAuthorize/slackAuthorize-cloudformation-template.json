@@ -4,6 +4,10 @@
 	"Parameters": {
 		"env": {
 			"Type": "String"
+		},
+		"apifutonGraphQLAPIIdOutput": {
+			"Type": "String",
+			"Default": "apifutonGraphQLAPIIdOutput"
 		}
 	},
 	"Conditions": {
@@ -50,6 +54,9 @@
 						},
 						"REGION": {
 							"Ref": "AWS::Region"
+						},
+						"API_FUTON_GRAPHQLAPIIDOUTPUT": {
+							"Ref": "apifutonGraphQLAPIIdOutput"
 						}
 					}
 				},
@@ -63,7 +70,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "futon-ft-20190618204653-deployment",
-					"S3Key": "amplify-builds/slackAuthorize-1561031576-latest-build.zip"
+					"S3Key": "amplify-builds/slackAuthorize-1561035264-latest-build.zip"
 				}
 			}
 		},
@@ -158,6 +165,53 @@
 								},
 								{
 									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/FutonSlackClientSecret"
+								}
+							]
+						},
+						{
+							"Effect": "Allow",
+							"Action": [
+								"dynamodb:PutItem",
+								"dynamodb:GetItem",
+								"dynamodb:UpdateItem"
+							],
+							"Resource": [
+								{
+									"Fn::Sub": [
+										"arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+										{
+											"tablename": {
+												"Fn::If": [
+													"ShouldNotCreateEnvResources",
+													{
+														"Fn::Join": [
+															"-",
+															[
+																"Workspace",
+																{
+																	"Ref": "apifutonGraphQLAPIIdOutput"
+																}
+															]
+														]
+													},
+													{
+														"Fn::Join": [
+															"-",
+															[
+																"Workspace",
+																{
+																	"Ref": "apifutonGraphQLAPIIdOutput"
+																},
+																{
+																	"Ref": "env"
+																}
+															]
+														]
+													}
+												]
+											}
+										}
+									]
 								}
 							]
 						}

@@ -48,7 +48,7 @@ app.use(function(req, res, next) {
   next()
 });
 
-app.post('/slack/action-endpoint', function(req, res) {
+app.post('/slack/action-endpoint', async function(req, res) {
   if ("challenge" in req.body) {
     return res.json({challenge: req.body.challenge})
   }
@@ -58,6 +58,16 @@ app.post('/slack/action-endpoint', function(req, res) {
   }
 
   let team_id = req.body.team_id;
+
+  const response = (await dynamodb.get({
+    TableName: workspaceTableName,
+    Key:{
+      id: team_id
+    }
+  }).promise());
+
+  console.log(response);
+  console.log(response.Item);
 
   let now = (new Date()).toISOString();
 
@@ -152,22 +162,6 @@ app.post('/slack/action-endpoint', function(req, res) {
       });
       break;
   }
-
-  let putWorkspaceItemParams = {
-    TableName: workspaceTableName,
-    Item: {
-      id: req.body.team_id,
-      token: req.body.token,
-      createdAt: now
-    }
-  };
-
-  dynamodb.put(putWorkspaceItemParams, (err, data) => {
-    if(err) {
-      res.statusCode = 500;
-      return res.json({error: err, url: req.url, body: req.body});
-    }
-  });
 
   let putEventItemParams = {
     TableName: eventTableName,
