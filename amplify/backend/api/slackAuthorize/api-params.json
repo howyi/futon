@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/slack-authorize",
+            "lambdaFunction": "slackAuthorize",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "slackAuthorize",
+    "apiName": "slackAuthorize",
+    "functionArns": [
+        {
+            "lambdaFunction": "slackAuthorize"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "futon-ft-20190618204653-authRole",
+        "unAuthRoleName": "futon-ft-20190618204653-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "slackAuthorize",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

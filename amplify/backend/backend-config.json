@@ -27,6 +27,11 @@
 					]
 				}
 			]
+		},
+		"slackAuthorize": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
 		}
 	},
 	"auth": {
@@ -50,6 +55,20 @@
 				{
 					"category": "function",
 					"resourceName": "slack",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		},
+		"slackAuthorize": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "slackAuthorize",
 					"attributes": [
 						"Name",
 						"Arn"
