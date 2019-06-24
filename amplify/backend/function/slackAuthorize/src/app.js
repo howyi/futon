@@ -48,7 +48,8 @@ app.use(function(req, res, next) {
 
 app.get('/slack-authorize/callback', async function(req, res) {
     if ("error" in req.query && req.query.error === 'access_denied') {
-        return res.redirect('https://www.bing.com/');
+        const query = querystring.stringify({state: 'canceled'});
+        return res.redirect(req.query.state + '?' + query);
     }
 
     const slack = new WebClient();
@@ -92,7 +93,8 @@ app.get('/slack-authorize/callback', async function(req, res) {
         return res.json({error: err, url: req.url, body: req.body});
     });
 
-    res.redirect(req.query.state);
+    const query = querystring.stringify({state: 'added'});
+    return res.redirect(req.query.state + '?' + query);
 });
 
 app.get('/slack-authorize', async function(req, res) {
@@ -100,7 +102,7 @@ app.get('/slack-authorize', async function(req, res) {
   if (environment !== '') {
       redirect_uri += '/' + environment
   }
-  redirect_uri += req.originalUrl + '/callback';
+  redirect_uri += '/slack-authorize/callback';
 
   const client_id = (await SSM.getParameter({Name: 'FutonSlackClientId'}).promise()).Parameter.Value;
   const url = 'https://slack.com/oauth/authorize';
@@ -128,7 +130,7 @@ app.get('/slack-authorize', async function(req, res) {
           'bot',
       ],
       redirect_uri: redirect_uri,
-      state: 'https://www.google.com/'
+      state: req.query.state
   });
 
   res.redirect(url + '?' + query)
