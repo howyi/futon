@@ -3,12 +3,20 @@
 
 export type CreateWorkspaceInput = {
   id?: string | null,
-  token: string,
+  accessToken: string,
+  scope: string,
+  botUserId: string,
+  botAccessToken: string,
+  cache?: string | null,
 };
 
 export type UpdateWorkspaceInput = {
   id: string,
-  token?: string | null,
+  accessToken?: string | null,
+  scope?: string | null,
+  botUserId?: string | null,
+  botAccessToken?: string | null,
+  cache?: string | null,
 };
 
 export type DeleteWorkspaceInput = {
@@ -49,7 +57,11 @@ export type DeleteRankInput = {
 
 export type ModelWorkspaceFilterInput = {
   id?: ModelIDFilterInput | null,
-  token?: ModelStringFilterInput | null,
+  accessToken?: ModelStringFilterInput | null,
+  scope?: ModelStringFilterInput | null,
+  botUserId?: ModelStringFilterInput | null,
+  botAccessToken?: ModelStringFilterInput | null,
+  cache?: ModelStringFilterInput | null,
   and?: Array< ModelWorkspaceFilterInput | null > | null,
   or?: Array< ModelWorkspaceFilterInput | null > | null,
   not?: ModelWorkspaceFilterInput | null,
@@ -105,7 +117,11 @@ export type CreateWorkspaceMutation = {
   createWorkspace:  {
     __typename: "Workspace",
     id: string,
-    token: string,
+    accessToken: string,
+    scope: string,
+    botUserId: string,
+    botAccessToken: string,
+    cache: string | null,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -135,7 +151,11 @@ export type UpdateWorkspaceMutation = {
   updateWorkspace:  {
     __typename: "Workspace",
     id: string,
-    token: string,
+    accessToken: string,
+    scope: string,
+    botUserId: string,
+    botAccessToken: string,
+    cache: string | null,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -165,7 +185,11 @@ export type DeleteWorkspaceMutation = {
   deleteWorkspace:  {
     __typename: "Workspace",
     id: string,
-    token: string,
+    accessToken: string,
+    scope: string,
+    botUserId: string,
+    botAccessToken: string,
+    cache: string | null,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -198,7 +222,11 @@ export type CreateEventMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -223,7 +251,11 @@ export type UpdateEventMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -248,7 +280,11 @@ export type DeleteEventMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -273,7 +309,11 @@ export type CreateRankMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -298,7 +338,11 @@ export type UpdateRankMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -323,7 +367,11 @@ export type DeleteRankMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -353,7 +401,11 @@ export type GetWorkspaceQuery = {
   getWorkspace:  {
     __typename: "Workspace",
     id: string,
-    token: string,
+    accessToken: string,
+    scope: string,
+    botUserId: string,
+    botAccessToken: string,
+    cache: string | null,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -387,7 +439,11 @@ export type ListWorkspacesQuery = {
     items:  Array< {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -412,7 +468,11 @@ export type GetEventQuery = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -441,7 +501,11 @@ export type ListEventsQuery = {
       workspace:  {
         __typename: "Workspace",
         id: string,
-        token: string,
+        accessToken: string,
+        scope: string,
+        botUserId: string,
+        botAccessToken: string,
+        cache: string | null,
       },
       raw: string,
     } | null > | null,
@@ -460,7 +524,11 @@ export type GetRankQuery = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -489,7 +557,11 @@ export type ListRanksQuery = {
       workspace:  {
         __typename: "Workspace",
         id: string,
-        token: string,
+        accessToken: string,
+        scope: string,
+        botUserId: string,
+        botAccessToken: string,
+        cache: string | null,
       },
       reactions: string,
     } | null > | null,
@@ -501,7 +573,11 @@ export type OnCreateWorkspaceSubscription = {
   onCreateWorkspace:  {
     __typename: "Workspace",
     id: string,
-    token: string,
+    accessToken: string,
+    scope: string,
+    botUserId: string,
+    botAccessToken: string,
+    cache: string | null,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -527,7 +603,11 @@ export type OnUpdateWorkspaceSubscription = {
   onUpdateWorkspace:  {
     __typename: "Workspace",
     id: string,
-    token: string,
+    accessToken: string,
+    scope: string,
+    botUserId: string,
+    botAccessToken: string,
+    cache: string | null,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -553,7 +633,11 @@ export type OnDeleteWorkspaceSubscription = {
   onDeleteWorkspace:  {
     __typename: "Workspace",
     id: string,
-    token: string,
+    accessToken: string,
+    scope: string,
+    botUserId: string,
+    botAccessToken: string,
+    cache: string | null,
     events:  {
       __typename: "ModelEventConnection",
       items:  Array< {
@@ -582,7 +666,11 @@ export type OnCreateEventSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -603,7 +691,11 @@ export type OnUpdateEventSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -624,7 +716,11 @@ export type OnDeleteEventSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -645,7 +741,11 @@ export type OnCreateRankSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -666,7 +766,11 @@ export type OnUpdateRankSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,
@@ -687,7 +791,11 @@ export type OnDeleteRankSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
-      token: string,
+      accessToken: string,
+      scope: string,
+      botUserId: string,
+      botAccessToken: string,
+      cache: string | null,
       events:  {
         __typename: "ModelEventConnection",
         nextToken: string | null,

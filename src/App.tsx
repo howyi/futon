@@ -1,33 +1,31 @@
 import React from 'react';
 import './App.css';
 
-import Amplify from 'aws-amplify';
+import Amplify, {graphqlOperation, I18n} from 'aws-amplify';
 import awsmobile from './aws-exports';
-import {withAuthenticator} from 'aws-amplify-react';
+import {Connect, withAuthenticator} from 'aws-amplify-react';
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import './element-variables.scss';
 import FtTop from "./routes/FtTop";
-import {Layout, Menu} from "element-react";
+import {Layout, Loading, Menu} from "element-react";
 import FtRank from "./routes/FtRank";
+import {listWorkspaces} from "./graphql/queries";
 const querystring = require('querystring');
 
 Amplify.configure(awsmobile);
 
 class App extends React.Component {
 
-    private onSelect(index: any) {
+    private onSelect(index: string) {
         if (index === '0') {
-            // redirect
-            console.log('redirect');
-
             const url = awsmobile.aws_cloud_logic_custom[1].endpoint + '/slack-authorize';
             const query = querystring.stringify({
                 state:  window.location.href
             });
-
             window.location.href = url + '?' + query;
         }
-        console.log(index);
+    }
+    private onWorkspaceSelect(index: string) {
     }
 
     public render() {
@@ -40,8 +38,22 @@ class App extends React.Component {
                                 <Link to="/"><Menu.Item index="Home">Home</Menu.Item></Link>
                                 <Menu.Item index="0" style={{backgroundColor: '#97a2fb', color: 'aliceblue'}}>Add Slack
                                     Workspace</Menu.Item>
-                                <Link to="/111"><Menu.Item index="2">Navigator Two</Menu.Item></Link>
-                                <Menu.Item index="3">Navigator Three</Menu.Item>
+                            </Menu>
+                            <Menu defaultActive="2" className="el-menu-vertical-demo" onSelect={this.onWorkspaceSelect.bind(this)} >
+                                <Connect query={graphqlOperation(listWorkspaces)}>
+                                    {({data: {listWorkspaces: workspaces}}: any) => {
+                                        if (!workspaces) {
+                                            return <Loading text={I18n.get('Loading ...')}/>;
+                                        }
+                                        return (
+                                            <div>
+                                                {workspaces.items.map((e: any) => (
+                                                    <Link to={"/" + e.id}><Menu.Item index="{e.id}">{e.id}</Menu.Item></Link>
+                                                ))}
+                                            </div>
+                                        );
+                                    }}
+                                </Connect>
                             </Menu>
                         </Layout.Col>
                         <Layout.Col span="20">
