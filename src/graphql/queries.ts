@@ -8,7 +8,11 @@ export const echo = `query Echo($workspaceId: String) {
 export const getWorkspace = `query GetWorkspace($id: ID!) {
   getWorkspace(id: $id) {
     id
-    token
+    accessToken
+    scope
+    botUserId
+    botAccessToken
+    cache
     events {
       items {
         id
@@ -34,7 +38,11 @@ export const listWorkspaces = `query ListWorkspaces(
   listWorkspaces(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -51,7 +59,11 @@ export const getEvent = `query GetEvent($id: ID!) {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -73,6 +85,11 @@ export const listEvents = `query ListEvents(
       id
       workspace {
         id
+        accessToken
+        scope
+        botUserId
+        botAccessToken
+        cache
       }
       raw
     }
@@ -85,7 +102,11 @@ export const getRank = `query GetRank($id: ID!) {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -107,7 +128,11 @@ export const listRanks = `query ListRanks(
       id
       workspace {
         id
-        token
+        accessToken
+        scope
+        botUserId
+        botAccessToken
+        cache
       }
       reactions
     }

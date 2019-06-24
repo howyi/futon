@@ -4,7 +4,11 @@
 export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspaceInput!) {
   createWorkspace(input: $input) {
     id
-    token
+    accessToken
+    scope
+    botUserId
+    botAccessToken
+    cache
     events {
       items {
         id
@@ -25,7 +29,11 @@ export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspace
 export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspaceInput!) {
   updateWorkspace(input: $input) {
     id
-    token
+    accessToken
+    scope
+    botUserId
+    botAccessToken
+    cache
     events {
       items {
         id
@@ -46,7 +54,11 @@ export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspace
 export const deleteWorkspace = `mutation DeleteWorkspace($input: DeleteWorkspaceInput!) {
   deleteWorkspace(input: $input) {
     id
-    token
+    accessToken
+    scope
+    botUserId
+    botAccessToken
+    cache
     events {
       items {
         id
@@ -69,7 +81,11 @@ export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -86,7 +102,11 @@ export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -103,7 +123,11 @@ export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -120,7 +144,11 @@ export const createRank = `mutation CreateRank($input: CreateRankInput!) {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -137,7 +165,11 @@ export const updateRank = `mutation UpdateRank($input: UpdateRankInput!) {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -154,7 +186,11 @@ export const deleteRank = `mutation DeleteRank($input: DeleteRankInput!) {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }

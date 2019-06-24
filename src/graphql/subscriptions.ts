@@ -4,7 +4,11 @@
 export const onCreateWorkspace = `subscription OnCreateWorkspace {
   onCreateWorkspace {
     id
-    token
+    accessToken
+    scope
+    botUserId
+    botAccessToken
+    cache
     events {
       items {
         id
@@ -25,7 +29,11 @@ export const onCreateWorkspace = `subscription OnCreateWorkspace {
 export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
   onUpdateWorkspace {
     id
-    token
+    accessToken
+    scope
+    botUserId
+    botAccessToken
+    cache
     events {
       items {
         id
@@ -46,7 +54,11 @@ export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
 export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
   onDeleteWorkspace {
     id
-    token
+    accessToken
+    scope
+    botUserId
+    botAccessToken
+    cache
     events {
       items {
         id
@@ -69,7 +81,11 @@ export const onCreateEvent = `subscription OnCreateEvent {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -86,7 +102,11 @@ export const onUpdateEvent = `subscription OnUpdateEvent {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -103,7 +123,11 @@ export const onDeleteEvent = `subscription OnDeleteEvent {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -120,7 +144,11 @@ export const onCreateRank = `subscription OnCreateRank {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -137,7 +165,11 @@ export const onUpdateRank = `subscription OnUpdateRank {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
@@ -154,7 +186,11 @@ export const onDeleteRank = `subscription OnDeleteRank {
     id
     workspace {
       id
-      token
+      accessToken
+      scope
+      botUserId
+      botAccessToken
+      cache
       events {
         nextToken
       }
