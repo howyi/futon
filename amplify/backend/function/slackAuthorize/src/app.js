@@ -55,7 +55,7 @@ app.get('/slack-authorize/callback', async function(req, res) {
     const slack = new WebClient();
 
     const code = req.query.code;
-    const parameters = (await SSM.getParameters({Names: ['FutonSlackClientId', 'FutonSlackClientSecret']}).promise()).Parameters;
+    const parameters = (await SSM.getParameters({Names: ['/Futon/SlackClientId', '/Futon/SlackClientSecret']}).promise()).Parameters;
     const client_id = parameters[0].Value;
     const client_secret = parameters[1].Value;
 
@@ -104,7 +104,7 @@ app.get('/slack-authorize', async function(req, res) {
   }
   redirect_uri += '/slack-authorize/callback';
 
-  const client_id = (await SSM.getParameter({Name: 'FutonSlackClientId'}).promise()).Parameter.Value;
+  const client_id = (await SSM.getParameter({Name: '/Futon/SlackClientId'}).promise()).Parameter.Value;
   const url = 'https://slack.com/oauth/authorize';
   const query = querystring.stringify({
       client_id: client_id,

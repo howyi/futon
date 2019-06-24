@@ -4,8 +4,9 @@ type Workspace @model {
   scope: String!
   botUserId: String!
   botAccessToken: String!
+  cache: AWSJSON
   events: [Event!]! @connection(name: "WorkspaceEvents", keyField: "workspaceId")
-  ranks: [Rank!]! @connection(name: "WorkspaceRanks", keyField: "workspaceId")
+  ranks: [Rank!]! @connection(name: "WorkspaceRanks", keyField: "workspaceId"),
 }
 
 type Event @model {
@@ -21,5 +22,5 @@ type Rank @model {
 }
 
 type Query {
-  echo(workspaceId: String): String @function(name: "getWorkspaceCache-${env}")
+  echo(workspaceId: String): AWSJSON @function(name: "getWorkspaceCache-${env}")
 }

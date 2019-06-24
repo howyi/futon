@@ -70,7 +70,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "futon-ft-20190618204653-deployment",
-					"S3Key": "amplify-builds/slackAuthorize-1561371768-latest-build.zip"
+					"S3Key": "amplify-builds/slackAuthorize-1561381610-latest-build.zip"
 				}
 			}
 		},
@@ -161,10 +161,10 @@
 							],
 							"Resource": [
 								{
-									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/FutonSlackClientId"
+									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter//Futon/SlackClientId"
 								},
 								{
-									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/FutonSlackClientSecret"
+									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter//Futon/SlackClientSecret"
 								}
 							]
 						},
@@ -222,7 +222,7 @@
 		"futonSlackClientId": {
 			"Type": "AWS::SSM::Parameter",
 			"Properties": {
-				"Name": "FutonSlackClientId",
+				"Name": "/Futon/SlackClientId",
 				"Type": "String",
 				"Value": "defaultClientId",
 				"Description": "Slack Client ID"
@@ -231,7 +231,7 @@
 		"futonSlackClientSecret": {
 			"Type": "AWS::SSM::Parameter",
 			"Properties": {
-				"Name": "FutonSlackClientSecret",
+				"Name": "/Futon/SlackClientSecret",
 				"Type": "String",
 				"Value": "defaultClientSecret",
 				"Description": "Slack Client Secret"

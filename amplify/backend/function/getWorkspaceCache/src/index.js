@@ -6,7 +6,6 @@ var region = process.env.REGION
 Amplify Params - DO NOT EDIT */
 
 const AWS = require('aws-sdk');
-const SSM = new AWS.SSM();
 var apiFutonGraphQLAPIIdOutput = process.env.API_FUTON_GRAPHQLAPIIDOUTPUT;
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -28,31 +27,41 @@ exports.handler = async function (event, context) { //eslint-disable-line
       id: workspaceId
     }
   };
-  console.log(params);
-
-  let parameter = await SSM.getParameter({Name: "SlackToken"}).promise();
-  let token = parameter.Parameter.Value;
-  let slack = new WebClient(token);
-
-  const res = await slack.team.info();
-  console.log(res);
 
   console.log('qqqq');
-  dynamodb.get(params, function(err, data) {
-    console.log('fffff');
+  await dynamodb.get(params, function(err, data) {
     if (err) {
       console.log(err);
     } else {
       console.log(data);
 
-      // let slack = new WebClient(data.Item.token);
-      //
-      // (async () => {
-      //   const res = await slack.team.info();
-      //   console.log('INFO: ', res.ts);
-      //   context.done(null, event.arguments.workspaceId);
-      // })();
+      let slack = new WebClient(data.Item.accessToken);
+
+      const team = slack.team.info();
+      const users = slack.users.list();
+      const emoji = slack.emoji.list();
+
+      const cache = {
+        id: workspaceId,
+        team,
+        users,
+        emoji
+      };
+
+      let updateParams = {
+        TableName: workspaceTableName,
+        Key:{
+          id: workspaceId
+        },
+        Item: {cache}
+      };
+
+      console.log(cache);
+      console.log(updateParams);
+
+      dynamodb.put(updateParams);
+
+      return cache;
     }
-    console.log('zzzzz');
   });
 };
