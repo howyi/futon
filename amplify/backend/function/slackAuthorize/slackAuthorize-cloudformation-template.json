@@ -70,7 +70,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "futon-ft-20190618204653-deployment",
-					"S3Key": "amplify-builds/slackAuthorize-1561381610-latest-build.zip"
+					"S3Key": "amplify-builds/slackAuthorize-1561429763-latest-build.zip"
 				}
 			}
 		},
@@ -161,10 +161,10 @@
 							],
 							"Resource": [
 								{
-									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter//Futon/SlackClientId"
+									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/Futon/SlackClientId"
 								},
 								{
-									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter//Futon/SlackClientSecret"
+									"Fn::Sub": "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/Futon/SlackClientSecret"
 								}
 							]
 						},
