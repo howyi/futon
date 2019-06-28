@@ -4,6 +4,8 @@
 export const onCreateWorkspace = `subscription OnCreateWorkspace {
   onCreateWorkspace {
     id
+    name
+    registeredUserIds
     accessToken
     scope
     botUserId
@@ -23,6 +25,8 @@ export const onCreateWorkspace = `subscription OnCreateWorkspace {
 export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
   onUpdateWorkspace {
     id
+    name
+    registeredUserIds
     accessToken
     scope
     botUserId
@@ -42,6 +46,8 @@ export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
 export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
   onDeleteWorkspace {
     id
+    name
+    registeredUserIds
     accessToken
     scope
     botUserId
@@ -63,6 +69,8 @@ export const onCreateRank = `subscription OnCreateRank {
     id
     workspace {
       id
+      name
+      registeredUserIds
       accessToken
       scope
       botUserId
@@ -82,6 +90,8 @@ export const onUpdateRank = `subscription OnUpdateRank {
     id
     workspace {
       id
+      name
+      registeredUserIds
       accessToken
       scope
       botUserId
@@ -101,6 +111,8 @@ export const onDeleteRank = `subscription OnDeleteRank {
     id
     workspace {
       id
+      name
+      registeredUserIds
       accessToken
       scope
       botUserId

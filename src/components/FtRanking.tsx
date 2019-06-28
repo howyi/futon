@@ -1,19 +1,25 @@
 import React from 'react';
-import {Layout} from "element-react";
+import {Tabs} from "element-react";
 
-export default function FtRanking({ranks}: any) {
+export default function FtRanking({ranks, rawCache}: any) {
 
-    console.log(ranks);
+    if (!rawCache) {
+        // どうのこうの
+    }
 
-    const a = 9;
+    // なんで？
+    const cache = JSON.parse(JSON.parse(rawCache));
+    console.log(cache);
 
     return (
         <div>
+            <Tabs onTabClick={ (tab) => console.log(tab.props.name) }>
             {ranks.map((e: any) => (
-                <Layout.Col span="24" key={e.id}>
-                    {e.id} <br/>
-                </Layout.Col>
+                <Tabs.Pane label={':' + e.emoji + ':'} name={e.emoji} key={e.id}>
+                    {e.users}
+                </Tabs.Pane>
             ))}
+            </Tabs>
         </div>
     );
 };

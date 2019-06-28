@@ -74,14 +74,25 @@ app.get('/slack-authorize/callback', async function(req, res) {
 
     const now = (new Date()).toISOString();
 
+    const authedSlack = new WebClient(slackData.access_token);
+
+    const team = await authedSlack.team.info();
+    const users = await authedSlack.users.list();
+    const emoji = await authedSlack.emoji.list();
+
+    const cache = {team, users, emoji};
+
     let putWorkspaceItemParams = {
         TableName: workspaceTableName,
         Item: {
             id: slackData.team_id,
+            name: slackData.team_name,
+            registeredUserIds: [],
             accessToken: slackData.access_token,
             scope: slackData.scope,
             botUserId: slackData.bot.bot_user_id,
             botAccessToken: slackData.bot.bot_access_token,
+            cache: JSON.stringify(cache),
             createdAt: now
         }
     };

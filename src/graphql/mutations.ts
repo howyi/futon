@@ -4,6 +4,8 @@
 export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspaceInput!) {
   createWorkspace(input: $input) {
     id
+    name
+    registeredUserIds
     accessToken
     scope
     botUserId
@@ -23,6 +25,8 @@ export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspace
 export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspaceInput!) {
   updateWorkspace(input: $input) {
     id
+    name
+    registeredUserIds
     accessToken
     scope
     botUserId
@@ -42,6 +46,8 @@ export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspace
 export const deleteWorkspace = `mutation DeleteWorkspace($input: DeleteWorkspaceInput!) {
   deleteWorkspace(input: $input) {
     id
+    name
+    registeredUserIds
     accessToken
     scope
     botUserId
@@ -63,6 +69,8 @@ export const createRank = `mutation CreateRank($input: CreateRankInput!) {
     id
     workspace {
       id
+      name
+      registeredUserIds
       accessToken
       scope
       botUserId
@@ -82,6 +90,8 @@ export const updateRank = `mutation UpdateRank($input: UpdateRankInput!) {
     id
     workspace {
       id
+      name
+      registeredUserIds
       accessToken
       scope
       botUserId
@@ -101,6 +111,8 @@ export const deleteRank = `mutation DeleteRank($input: DeleteRankInput!) {
     id
     workspace {
       id
+      name
+      registeredUserIds
       accessToken
       scope
       botUserId

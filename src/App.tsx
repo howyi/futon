@@ -25,6 +25,7 @@ class App extends React.Component {
             window.location.href = url + '?' + query;
         }
     }
+
     private onWorkspaceSelect(index: string) {
     }
 
@@ -41,14 +42,17 @@ class App extends React.Component {
                             </Menu>
                             <Menu defaultActive="2" className="el-menu-vertical-demo" onSelect={this.onWorkspaceSelect.bind(this)} >
                                 <Connect query={graphqlOperation(listWorkspaces)}>
-                                    {({data: {listWorkspaces: workspaces}}: any) => {
-                                        if (!workspaces) {
+                                    {({data: {listWorkspaces: workspaces}, loading, error}: any) => {
+                                        if (error) {
+                                            return <h3><span role='img' aria-label='sob'>😭</span></h3>;
+                                        }
+                                        if (loading || !workspaces) {
                                             return <Loading text={I18n.get('Loading ...')}/>;
                                         }
                                         return (
                                             <div>
                                                 {workspaces.items.map((e: any) => (
-                                                    <Link to={"/" + e.id} key={e.id}><Menu.Item index="{e.id}">{e.id}</Menu.Item></Link>
+                                                    <Link to={"/" + e.id} key={e.id}><Menu.Item index="{e.id}">{e.name}</Menu.Item></Link>
                                                 ))}
                                             </div>
                                         );

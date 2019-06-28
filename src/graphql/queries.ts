@@ -8,6 +8,8 @@ export const echo = `query Echo($workspaceId: String) {
 export const getWorkspace = `query GetWorkspace($id: ID!) {
   getWorkspace(id: $id) {
     id
+    name
+    registeredUserIds
     accessToken
     scope
     botUserId
@@ -32,6 +34,8 @@ export const listWorkspaces = `query ListWorkspaces(
   listWorkspaces(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      name
+      registeredUserIds
       accessToken
       scope
       botUserId
@@ -50,6 +54,8 @@ export const getRank = `query GetRank($id: ID!) {
     id
     workspace {
       id
+      name
+      registeredUserIds
       accessToken
       scope
       botUserId
@@ -74,6 +80,8 @@ export const listRanks = `query ListRanks(
       id
       workspace {
         id
+        name
+        registeredUserIds
         accessToken
         scope
         botUserId

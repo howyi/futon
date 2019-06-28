@@ -1,10 +1,12 @@
 type Workspace @model {
   id: ID!
+  name: String!
+  registeredUserIds: [ID!]!
   accessToken: String!
   scope: String!
   botUserId: String!
   botAccessToken: String!
-  cache: AWSJSON
+  cache: AWSJSON!
   ranks: [Rank!]! @connection(name: "WorkspaceRanks", keyField: "workspaceId"),
 }
 

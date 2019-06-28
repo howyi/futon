@@ -3,6 +3,8 @@
 
 export type CreateWorkspaceInput = {
   id?: string | null,
+  name: string,
+  registeredUserIds: Array< string >,
   accessToken: string,
   scope: string,
   botUserId: string,
@@ -12,6 +14,8 @@ export type CreateWorkspaceInput = {
 
 export type UpdateWorkspaceInput = {
   id: string,
+  name?: string | null,
+  registeredUserIds?: Array< string > | null,
   accessToken?: string | null,
   scope?: string | null,
   botUserId?: string | null,
@@ -43,6 +47,8 @@ export type DeleteRankInput = {
 
 export type ModelWorkspaceFilterInput = {
   id?: ModelIDFilterInput | null,
+  name?: ModelStringFilterInput | null,
+  registeredUserIds?: ModelIDFilterInput | null,
   accessToken?: ModelStringFilterInput | null,
   scope?: ModelStringFilterInput | null,
   botUserId?: ModelStringFilterInput | null,
@@ -96,6 +102,8 @@ export type CreateWorkspaceMutation = {
   createWorkspace:  {
     __typename: "Workspace",
     id: string,
+    name: string,
+    registeredUserIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
@@ -122,6 +130,8 @@ export type UpdateWorkspaceMutation = {
   updateWorkspace:  {
     __typename: "Workspace",
     id: string,
+    name: string,
+    registeredUserIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
@@ -148,6 +158,8 @@ export type DeleteWorkspaceMutation = {
   deleteWorkspace:  {
     __typename: "Workspace",
     id: string,
+    name: string,
+    registeredUserIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
@@ -177,6 +189,8 @@ export type CreateRankMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
+      name: string,
+      registeredUserIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
@@ -203,6 +217,8 @@ export type UpdateRankMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
+      name: string,
+      registeredUserIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
@@ -229,6 +245,8 @@ export type DeleteRankMutation = {
     workspace:  {
       __typename: "Workspace",
       id: string,
+      name: string,
+      registeredUserIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
@@ -260,6 +278,8 @@ export type GetWorkspaceQuery = {
   getWorkspace:  {
     __typename: "Workspace",
     id: string,
+    name: string,
+    registeredUserIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
@@ -290,6 +310,8 @@ export type ListWorkspacesQuery = {
     items:  Array< {
       __typename: "Workspace",
       id: string,
+      name: string,
+      registeredUserIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
@@ -315,6 +337,8 @@ export type GetRankQuery = {
     workspace:  {
       __typename: "Workspace",
       id: string,
+      name: string,
+      registeredUserIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
@@ -345,6 +369,8 @@ export type ListRanksQuery = {
       workspace:  {
         __typename: "Workspace",
         id: string,
+        name: string,
+        registeredUserIds: Array< string >,
         accessToken: string,
         scope: string,
         botUserId: string,
@@ -362,6 +388,8 @@ export type OnCreateWorkspaceSubscription = {
   onCreateWorkspace:  {
     __typename: "Workspace",
     id: string,
+    name: string,
+    registeredUserIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
@@ -384,6 +412,8 @@ export type OnUpdateWorkspaceSubscription = {
   onUpdateWorkspace:  {
     __typename: "Workspace",
     id: string,
+    name: string,
+    registeredUserIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
@@ -406,6 +436,8 @@ export type OnDeleteWorkspaceSubscription = {
   onDeleteWorkspace:  {
     __typename: "Workspace",
     id: string,
+    name: string,
+    registeredUserIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
@@ -431,6 +463,8 @@ export type OnCreateRankSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
+      name: string,
+      registeredUserIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
@@ -453,6 +487,8 @@ export type OnUpdateRankSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
+      name: string,
+      registeredUserIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
@@ -475,6 +511,8 @@ export type OnDeleteRankSubscription = {
     workspace:  {
       __typename: "Workspace",
       id: string,
+      name: string,
+      registeredUserIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
