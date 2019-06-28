@@ -21,47 +21,40 @@ exports.handler = async function (event, context) { //eslint-disable-line
   console.log(event.arguments);
   let workspaceId = event.arguments.workspaceId;
 
-  var params = {
+  const getParams = {
     TableName: workspaceTableName,
     Key:{
       id: workspaceId
     }
   };
 
-  console.log('qqqq');
-  await dynamodb.get(params, function(err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(data);
+  try {
+    const data = await dynamodb.get(getParams).promise();
 
-      let slack = new WebClient(data.Item.accessToken);
+    let slack = new WebClient(data.Item.accessToken);
 
-      const team = slack.team.info();
-      const users = slack.users.list();
-      const emoji = slack.emoji.list();
+    const team = await slack.team.info();
+    const users = await slack.users.list();
+    const emoji = await slack.emoji.list();
 
-      const cache = {
-        id: workspaceId,
-        team,
-        users,
-        emoji
-      };
+    const cache = {team, users, emoji};
 
-      let updateParams = {
-        TableName: workspaceTableName,
-        Key:{
-          id: workspaceId
-        },
-        Item: {cache}
-      };
+    let updateParams = {
+      TableName: workspaceTableName,
+      Key: {
+        id: workspaceId
+      },
+      UpdateExpression: "set cache = :c",
+      ExpressionAttributeValues:{
+        ":c": JSON.stringify(cache),
+      },
+      ReturnValues:"UPDATED_NEW",
+    };
 
-      console.log(cache);
-      console.log(updateParams);
+    await dynamodb.update(updateParams).promise();
 
-      dynamodb.put(updateParams);
-
-      return cache;
-    }
-  });
+    return cache;
+  } catch (e) {
+    console.error(e);
+  }
 };

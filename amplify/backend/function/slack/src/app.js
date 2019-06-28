@@ -58,131 +58,116 @@ app.post('/slack/action-endpoint', async function(req, res) {
   }
 
   let team_id = req.body.team_id;
+  try {
+    const response = (await dynamodb.get({
+      TableName: workspaceTableName,
+      Key:{
+        id: team_id
+      }
+    }).promise());
 
-  const response = (await dynamodb.get({
-    TableName: workspaceTableName,
-    Key:{
-      id: team_id
+    if (!("Item" in response)) {
+      return res.json({success: false});
     }
-  }).promise());
 
-  console.log(response);
-  console.log(response.Item);
+    let now = (new Date()).toISOString();
 
-  let now = (new Date()).toISOString();
+    let event = req.body.event;
+    switch(event.type) {
+      case "reaction_added":
+        await updateRank(
+            event.reaction,
+            event.item_user,
+            req.body.team_id,
+            1
+        );
+        break;
+      case "reaction_removed":
+        await updateRank(
+            event.reaction,
+            event.item_user,
+            req.body.team_id,
+            -1
+        );
+        break;
+    }
 
-  let event = req.body.event;
-  let reaction = {};
-  switch(event.type) {
-    case "reaction_added":
+    let putEventItemParams = {
+      TableName: eventTableName,
+      Item: {
+        id: uuidV4(),
+        workspaceId: req.body.team_id,
+        raw: (req.body),
+        createdAt: now
+      }
+    };
 
-      var params = {
-        TableName: rankTableName,
-        Key:{
-          id: team_id + '/' + event.item_user
-        }
-      };
-      reaction = event.reaction;
-      dynamodb.get(params, function(err, data){
-        if(err){
-          console.log(err);
-        } else {
-          let reactions = {
-            [reaction]: 0
-          };
-          console.log(reactions);
-          if ("Item" in data) {
-            reactions = data.Item.reactions;
-            if (reactions[reaction] === undefined) {
-              reactions[reaction] = 0;
-            }
-          }
-          reactions[reaction] = reactions[reaction] + 1;
-
-          let purRankIncItemParams = {
-            TableName: rankTableName,
-            Item: {
-              id: team_id + '/' + event.item_user,
-              workspaceId: req.body.team_id,
-              reactions: reactions,
-              createdAt: now
-            }
-          };
-
-          dynamodb.put(purRankIncItemParams, (err, data) => {
-            if(err) {
-              res.statusCode = 500;
-              return res.json({error: err, url: req.url, body: req.body});
-            }
-          });
-        }
-      });
-      break;
-    case "reaction_removed":
-      var params = {
-        TableName: rankTableName,
-        Key:{
-          id: team_id + '/' + event.item_user
-        }
-      };
-      reaction = event.reaction;
-      dynamodb.get(params, function(err, data){
-        if(err){
-          console.log(err);
-        } else {
-          let reactions = {
-            [reaction]: 0
-          };
-          console.log(reactions);
-          if ("Item" in data) {
-            reactions = data.Item.reactions;
-            if (reactions[reaction] === undefined) {
-              reactions[reaction] = 0;
-            }
-          }
-          reactions[reaction] = reactions[reaction] - 1;
-
-          let purRankIncItemParams = {
-            TableName: rankTableName,
-            Item: {
-              id: team_id + '/' + event.item_user,
-              workspaceId: req.body.team_id,
-              reactions: reactions,
-              createdAt: now
-            }
-          };
-
-          dynamodb.put(purRankIncItemParams, (err, data) => {
-            if(err) {
-              res.statusCode = 500;
-              return res.json({error: err, url: req.url, body: req.body});
-            }
-          });
-        }
-      });
-      break;
+    dynamodb.put(putEventItemParams, (err, data) => {
+      if(err) {
+        res.statusCode = 500;
+        console.log(err);
+        return res.json({error: err, url: req.url, body: req.body});
+      } else {
+        return res.json({success: true})
+      }
+    });
+  } catch (e) {
+    console.error(e);
   }
+});
 
-  let putEventItemParams = {
-    TableName: eventTableName,
-    Item: {
-      id: uuidV4(),
-      workspaceId: req.body.team_id,
-      raw: (req.body),
-      createdAt: now
+async function updateRank(reaction, user_id, team_id, delta) {
+  const getParams = {
+    TableName: rankTableName,
+    Key:{
+      id: team_id + '/' + reaction
     }
   };
 
-  dynamodb.put(putEventItemParams, (err, data) => {
-    if(err) {
-      res.statusCode = 500;
-      console.log(err);
-      return res.json({error: err, url: req.url, body: req.body});
+  const rank = await dynamodb.get(getParams).promise();
+
+  if (!("Item" in rank)) {
+    let purRankIncItemParams = {
+      TableName: rankTableName,
+      Item: {
+        id: team_id + '/' + reaction,
+        workspaceId: team_id,
+        emoji: reaction,
+        users: {},
+      }
+    };
+    await dynamodb.put(purRankIncItemParams).promise();
+  }
+
+  let updateParams = {
+    TableName: rankTableName,
+    Key: {
+      "id": team_id + '/' + reaction
+    },
+    UpdateExpression: `set #usr.${user_id} = #usr.${user_id} + (:val)`,
+    ConditionExpression: `attribute_exists(#usr.${user_id})`,
+    ExpressionAttributeNames: {
+      "#usr": "users",
+    },
+    ExpressionAttributeValues: {
+      ":val": delta
+    },
+    ReturnValues: "UPDATED_NEW"
+  };
+
+  try {
+    await dynamodb.update(updateParams).promise();
+  } catch (e) {
+    if (e.code  === 'ConditionalCheckFailedException') {
+      updateParams.UpdateExpression = `set #usr.${user_id} = :val`;
+      updateParams.ReturnValues = "UPDATED_NEW";
+      delete updateParams.ConditionExpression;
+      await dynamodb.update(updateParams).promise();
     } else {
-      return res.json({success: true})
+      throw e;
     }
-  });
-});
+  }
+}
 
 app.post('/slack/options-load-endpoint', function(req, res) {
   if ("challenge" in req.body) {

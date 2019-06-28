@@ -18,7 +18,8 @@ type Event @model {
 type Rank @model {
   id: ID!
   workspace: Workspace! @connection(name: "WorkspaceRanks", keyField: "workspaceId")
-  reactions: AWSJSON!
+  emoji: String!
+  users: AWSJSON!
 }
 
 type Query {

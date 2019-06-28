@@ -48,7 +48,7 @@ class App extends React.Component {
                                         return (
                                             <div>
                                                 {workspaces.items.map((e: any) => (
-                                                    <Link to={"/" + e.id}><Menu.Item index="{e.id}">{e.id}</Menu.Item></Link>
+                                                    <Link to={"/" + e.id} key={e.id}><Menu.Item index="{e.id}">{e.id}</Menu.Item></Link>
                                                 ))}
                                             </div>
                                         );
