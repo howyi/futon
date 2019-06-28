@@ -9,17 +9,11 @@ export const createWorkspace = `mutation CreateWorkspace($input: CreateWorkspace
     botUserId
     botAccessToken
     cache
-    events {
-      items {
-        id
-        raw
-      }
-      nextToken
-    }
     ranks {
       items {
         id
-        reactions
+        emoji
+        users
       }
       nextToken
     }
@@ -34,17 +28,11 @@ export const updateWorkspace = `mutation UpdateWorkspace($input: UpdateWorkspace
     botUserId
     botAccessToken
     cache
-    events {
-      items {
-        id
-        raw
-      }
-      nextToken
-    }
     ranks {
       items {
         id
-        reactions
+        emoji
+        users
       }
       nextToken
     }
@@ -59,83 +47,14 @@ export const deleteWorkspace = `mutation DeleteWorkspace($input: DeleteWorkspace
     botUserId
     botAccessToken
     cache
-    events {
-      items {
-        id
-        raw
-      }
-      nextToken
-    }
     ranks {
       items {
         id
-        reactions
+        emoji
+        users
       }
       nextToken
     }
-  }
-}
-`;
-export const createEvent = `mutation CreateEvent($input: CreateEventInput!) {
-  createEvent(input: $input) {
-    id
-    workspace {
-      id
-      accessToken
-      scope
-      botUserId
-      botAccessToken
-      cache
-      events {
-        nextToken
-      }
-      ranks {
-        nextToken
-      }
-    }
-    raw
-  }
-}
-`;
-export const updateEvent = `mutation UpdateEvent($input: UpdateEventInput!) {
-  updateEvent(input: $input) {
-    id
-    workspace {
-      id
-      accessToken
-      scope
-      botUserId
-      botAccessToken
-      cache
-      events {
-        nextToken
-      }
-      ranks {
-        nextToken
-      }
-    }
-    raw
-  }
-}
-`;
-export const deleteEvent = `mutation DeleteEvent($input: DeleteEventInput!) {
-  deleteEvent(input: $input) {
-    id
-    workspace {
-      id
-      accessToken
-      scope
-      botUserId
-      botAccessToken
-      cache
-      events {
-        nextToken
-      }
-      ranks {
-        nextToken
-      }
-    }
-    raw
   }
 }
 `;
@@ -149,14 +68,12 @@ export const createRank = `mutation CreateRank($input: CreateRankInput!) {
       botUserId
       botAccessToken
       cache
-      events {
-        nextToken
-      }
       ranks {
         nextToken
       }
     }
-    reactions
+    emoji
+    users
   }
 }
 `;
@@ -170,14 +87,12 @@ export const updateRank = `mutation UpdateRank($input: UpdateRankInput!) {
       botUserId
       botAccessToken
       cache
-      events {
-        nextToken
-      }
       ranks {
         nextToken
       }
     }
-    reactions
+    emoji
+    users
   }
 }
 `;
@@ -191,14 +106,12 @@ export const deleteRank = `mutation DeleteRank($input: DeleteRankInput!) {
       botUserId
       botAccessToken
       cache
-      events {
-        nextToken
-      }
       ranks {
         nextToken
       }
     }
-    reactions
+    emoji
+    users
   }
 }
 `;

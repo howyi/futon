@@ -23,31 +23,17 @@ export type DeleteWorkspaceInput = {
   id?: string | null,
 };
 
-export type CreateEventInput = {
-  id?: string | null,
-  raw: string,
-  workspaceId: string,
-};
-
-export type UpdateEventInput = {
-  id: string,
-  raw?: string | null,
-  workspaceId?: string | null,
-};
-
-export type DeleteEventInput = {
-  id?: string | null,
-};
-
 export type CreateRankInput = {
   id?: string | null,
-  reactions: string,
+  emoji: string,
+  users: string,
   workspaceId: string,
 };
 
 export type UpdateRankInput = {
   id: string,
-  reactions?: string | null,
+  emoji?: string | null,
+  users?: string | null,
   workspaceId?: string | null,
 };
 
@@ -93,17 +79,10 @@ export type ModelStringFilterInput = {
   beginsWith?: string | null,
 };
 
-export type ModelEventFilterInput = {
-  id?: ModelIDFilterInput | null,
-  raw?: ModelStringFilterInput | null,
-  and?: Array< ModelEventFilterInput | null > | null,
-  or?: Array< ModelEventFilterInput | null > | null,
-  not?: ModelEventFilterInput | null,
-};
-
 export type ModelRankFilterInput = {
   id?: ModelIDFilterInput | null,
-  reactions?: ModelStringFilterInput | null,
+  emoji?: ModelStringFilterInput | null,
+  users?: ModelStringFilterInput | null,
   and?: Array< ModelRankFilterInput | null > | null,
   or?: Array< ModelRankFilterInput | null > | null,
   not?: ModelRankFilterInput | null,
@@ -122,21 +101,13 @@ export type CreateWorkspaceMutation = {
     botUserId: string,
     botAccessToken: string,
     cache: string | null,
-    events:  {
-      __typename: "ModelEventConnection",
-      items:  Array< {
-        __typename: "Event",
-        id: string,
-        raw: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        reactions: string,
+        emoji: string,
+        users: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -156,21 +127,13 @@ export type UpdateWorkspaceMutation = {
     botUserId: string,
     botAccessToken: string,
     cache: string | null,
-    events:  {
-      __typename: "ModelEventConnection",
-      items:  Array< {
-        __typename: "Event",
-        id: string,
-        raw: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        reactions: string,
+        emoji: string,
+        users: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -190,111 +153,16 @@ export type DeleteWorkspaceMutation = {
     botUserId: string,
     botAccessToken: string,
     cache: string | null,
-    events:  {
-      __typename: "ModelEventConnection",
-      items:  Array< {
-        __typename: "Event",
-        id: string,
-        raw: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        reactions: string,
+        emoji: string,
+        users: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
-  } | null,
-};
-
-export type CreateEventMutationVariables = {
-  input: CreateEventInput,
-};
-
-export type CreateEventMutation = {
-  createEvent:  {
-    __typename: "Event",
-    id: string,
-    workspace:  {
-      __typename: "Workspace",
-      id: string,
-      accessToken: string,
-      scope: string,
-      botUserId: string,
-      botAccessToken: string,
-      cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
-      ranks:  {
-        __typename: "ModelRankConnection",
-        nextToken: string | null,
-      } | null,
-    },
-    raw: string,
-  } | null,
-};
-
-export type UpdateEventMutationVariables = {
-  input: UpdateEventInput,
-};
-
-export type UpdateEventMutation = {
-  updateEvent:  {
-    __typename: "Event",
-    id: string,
-    workspace:  {
-      __typename: "Workspace",
-      id: string,
-      accessToken: string,
-      scope: string,
-      botUserId: string,
-      botAccessToken: string,
-      cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
-      ranks:  {
-        __typename: "ModelRankConnection",
-        nextToken: string | null,
-      } | null,
-    },
-    raw: string,
-  } | null,
-};
-
-export type DeleteEventMutationVariables = {
-  input: DeleteEventInput,
-};
-
-export type DeleteEventMutation = {
-  deleteEvent:  {
-    __typename: "Event",
-    id: string,
-    workspace:  {
-      __typename: "Workspace",
-      id: string,
-      accessToken: string,
-      scope: string,
-      botUserId: string,
-      botAccessToken: string,
-      cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
-      ranks:  {
-        __typename: "ModelRankConnection",
-        nextToken: string | null,
-      } | null,
-    },
-    raw: string,
   } | null,
 };
 
@@ -314,16 +182,13 @@ export type CreateRankMutation = {
       botUserId: string,
       botAccessToken: string,
       cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    reactions: string,
+    emoji: string,
+    users: string,
   } | null,
 };
 
@@ -343,16 +208,13 @@ export type UpdateRankMutation = {
       botUserId: string,
       botAccessToken: string,
       cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    reactions: string,
+    emoji: string,
+    users: string,
   } | null,
 };
 
@@ -372,16 +234,13 @@ export type DeleteRankMutation = {
       botUserId: string,
       botAccessToken: string,
       cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    reactions: string,
+    emoji: string,
+    users: string,
   } | null,
 };
 
@@ -406,21 +265,13 @@ export type GetWorkspaceQuery = {
     botUserId: string,
     botAccessToken: string,
     cache: string | null,
-    events:  {
-      __typename: "ModelEventConnection",
-      items:  Array< {
-        __typename: "Event",
-        id: string,
-        raw: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        reactions: string,
+        emoji: string,
+        users: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -444,70 +295,10 @@ export type ListWorkspacesQuery = {
       botUserId: string,
       botAccessToken: string,
       cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
-    } | null > | null,
-    nextToken: string | null,
-  } | null,
-};
-
-export type GetEventQueryVariables = {
-  id: string,
-};
-
-export type GetEventQuery = {
-  getEvent:  {
-    __typename: "Event",
-    id: string,
-    workspace:  {
-      __typename: "Workspace",
-      id: string,
-      accessToken: string,
-      scope: string,
-      botUserId: string,
-      botAccessToken: string,
-      cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
-      ranks:  {
-        __typename: "ModelRankConnection",
-        nextToken: string | null,
-      } | null,
-    },
-    raw: string,
-  } | null,
-};
-
-export type ListEventsQueryVariables = {
-  filter?: ModelEventFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListEventsQuery = {
-  listEvents:  {
-    __typename: "ModelEventConnection",
-    items:  Array< {
-      __typename: "Event",
-      id: string,
-      workspace:  {
-        __typename: "Workspace",
-        id: string,
-        accessToken: string,
-        scope: string,
-        botUserId: string,
-        botAccessToken: string,
-        cache: string | null,
-      },
-      raw: string,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -529,16 +320,13 @@ export type GetRankQuery = {
       botUserId: string,
       botAccessToken: string,
       cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    reactions: string,
+    emoji: string,
+    users: string,
   } | null,
 };
 
@@ -563,7 +351,8 @@ export type ListRanksQuery = {
         botAccessToken: string,
         cache: string | null,
       },
-      reactions: string,
+      emoji: string,
+      users: string,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -578,21 +367,13 @@ export type OnCreateWorkspaceSubscription = {
     botUserId: string,
     botAccessToken: string,
     cache: string | null,
-    events:  {
-      __typename: "ModelEventConnection",
-      items:  Array< {
-        __typename: "Event",
-        id: string,
-        raw: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        reactions: string,
+        emoji: string,
+        users: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -608,21 +389,13 @@ export type OnUpdateWorkspaceSubscription = {
     botUserId: string,
     botAccessToken: string,
     cache: string | null,
-    events:  {
-      __typename: "ModelEventConnection",
-      items:  Array< {
-        __typename: "Event",
-        id: string,
-        raw: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        reactions: string,
+        emoji: string,
+        users: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -638,99 +411,16 @@ export type OnDeleteWorkspaceSubscription = {
     botUserId: string,
     botAccessToken: string,
     cache: string | null,
-    events:  {
-      __typename: "ModelEventConnection",
-      items:  Array< {
-        __typename: "Event",
-        id: string,
-        raw: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        reactions: string,
+        emoji: string,
+        users: string,
       } | null > | null,
       nextToken: string | null,
     } | null,
-  } | null,
-};
-
-export type OnCreateEventSubscription = {
-  onCreateEvent:  {
-    __typename: "Event",
-    id: string,
-    workspace:  {
-      __typename: "Workspace",
-      id: string,
-      accessToken: string,
-      scope: string,
-      botUserId: string,
-      botAccessToken: string,
-      cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
-      ranks:  {
-        __typename: "ModelRankConnection",
-        nextToken: string | null,
-      } | null,
-    },
-    raw: string,
-  } | null,
-};
-
-export type OnUpdateEventSubscription = {
-  onUpdateEvent:  {
-    __typename: "Event",
-    id: string,
-    workspace:  {
-      __typename: "Workspace",
-      id: string,
-      accessToken: string,
-      scope: string,
-      botUserId: string,
-      botAccessToken: string,
-      cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
-      ranks:  {
-        __typename: "ModelRankConnection",
-        nextToken: string | null,
-      } | null,
-    },
-    raw: string,
-  } | null,
-};
-
-export type OnDeleteEventSubscription = {
-  onDeleteEvent:  {
-    __typename: "Event",
-    id: string,
-    workspace:  {
-      __typename: "Workspace",
-      id: string,
-      accessToken: string,
-      scope: string,
-      botUserId: string,
-      botAccessToken: string,
-      cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
-      ranks:  {
-        __typename: "ModelRankConnection",
-        nextToken: string | null,
-      } | null,
-    },
-    raw: string,
   } | null,
 };
 
@@ -746,16 +436,13 @@ export type OnCreateRankSubscription = {
       botUserId: string,
       botAccessToken: string,
       cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    reactions: string,
+    emoji: string,
+    users: string,
   } | null,
 };
 
@@ -771,16 +458,13 @@ export type OnUpdateRankSubscription = {
       botUserId: string,
       botAccessToken: string,
       cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    reactions: string,
+    emoji: string,
+    users: string,
   } | null,
 };
 
@@ -796,15 +480,12 @@ export type OnDeleteRankSubscription = {
       botUserId: string,
       botAccessToken: string,
       cache: string | null,
-      events:  {
-        __typename: "ModelEventConnection",
-        nextToken: string | null,
-      } | null,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    reactions: string,
+    emoji: string,
+    users: string,
   } | null,
 };

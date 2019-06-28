@@ -13,17 +13,11 @@ export const getWorkspace = `query GetWorkspace($id: ID!) {
     botUserId
     botAccessToken
     cache
-    events {
-      items {
-        id
-        raw
-      }
-      nextToken
-    }
     ranks {
       items {
         id
-        reactions
+        emoji
+        users
       }
       nextToken
     }
@@ -43,55 +37,9 @@ export const listWorkspaces = `query ListWorkspaces(
       botUserId
       botAccessToken
       cache
-      events {
-        nextToken
-      }
       ranks {
         nextToken
       }
-    }
-    nextToken
-  }
-}
-`;
-export const getEvent = `query GetEvent($id: ID!) {
-  getEvent(id: $id) {
-    id
-    workspace {
-      id
-      accessToken
-      scope
-      botUserId
-      botAccessToken
-      cache
-      events {
-        nextToken
-      }
-      ranks {
-        nextToken
-      }
-    }
-    raw
-  }
-}
-`;
-export const listEvents = `query ListEvents(
-  $filter: ModelEventFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      workspace {
-        id
-        accessToken
-        scope
-        botUserId
-        botAccessToken
-        cache
-      }
-      raw
     }
     nextToken
   }
@@ -107,14 +55,12 @@ export const getRank = `query GetRank($id: ID!) {
       botUserId
       botAccessToken
       cache
-      events {
-        nextToken
-      }
       ranks {
         nextToken
       }
     }
-    reactions
+    emoji
+    users
   }
 }
 `;
@@ -134,7 +80,8 @@ export const listRanks = `query ListRanks(
         botAccessToken
         cache
       }
-      reactions
+      emoji
+      users
     }
     nextToken
   }

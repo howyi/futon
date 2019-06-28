@@ -9,17 +9,11 @@ export const onCreateWorkspace = `subscription OnCreateWorkspace {
     botUserId
     botAccessToken
     cache
-    events {
-      items {
-        id
-        raw
-      }
-      nextToken
-    }
     ranks {
       items {
         id
-        reactions
+        emoji
+        users
       }
       nextToken
     }
@@ -34,17 +28,11 @@ export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
     botUserId
     botAccessToken
     cache
-    events {
-      items {
-        id
-        raw
-      }
-      nextToken
-    }
     ranks {
       items {
         id
-        reactions
+        emoji
+        users
       }
       nextToken
     }
@@ -59,83 +47,14 @@ export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
     botUserId
     botAccessToken
     cache
-    events {
-      items {
-        id
-        raw
-      }
-      nextToken
-    }
     ranks {
       items {
         id
-        reactions
+        emoji
+        users
       }
       nextToken
     }
-  }
-}
-`;
-export const onCreateEvent = `subscription OnCreateEvent {
-  onCreateEvent {
-    id
-    workspace {
-      id
-      accessToken
-      scope
-      botUserId
-      botAccessToken
-      cache
-      events {
-        nextToken
-      }
-      ranks {
-        nextToken
-      }
-    }
-    raw
-  }
-}
-`;
-export const onUpdateEvent = `subscription OnUpdateEvent {
-  onUpdateEvent {
-    id
-    workspace {
-      id
-      accessToken
-      scope
-      botUserId
-      botAccessToken
-      cache
-      events {
-        nextToken
-      }
-      ranks {
-        nextToken
-      }
-    }
-    raw
-  }
-}
-`;
-export const onDeleteEvent = `subscription OnDeleteEvent {
-  onDeleteEvent {
-    id
-    workspace {
-      id
-      accessToken
-      scope
-      botUserId
-      botAccessToken
-      cache
-      events {
-        nextToken
-      }
-      ranks {
-        nextToken
-      }
-    }
-    raw
   }
 }
 `;
@@ -149,14 +68,12 @@ export const onCreateRank = `subscription OnCreateRank {
       botUserId
       botAccessToken
       cache
-      events {
-        nextToken
-      }
       ranks {
         nextToken
       }
     }
-    reactions
+    emoji
+    users
   }
 }
 `;
@@ -170,14 +87,12 @@ export const onUpdateRank = `subscription OnUpdateRank {
       botUserId
       botAccessToken
       cache
-      events {
-        nextToken
-      }
       ranks {
         nextToken
       }
     }
-    reactions
+    emoji
+    users
   }
 }
 `;
@@ -191,14 +106,12 @@ export const onDeleteRank = `subscription OnDeleteRank {
       botUserId
       botAccessToken
       cache
-      events {
-        nextToken
-      }
       ranks {
         nextToken
       }
     }
-    reactions
+    emoji
+    users
   }
 }
 `;
