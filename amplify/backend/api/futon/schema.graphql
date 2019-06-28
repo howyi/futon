@@ -5,14 +5,7 @@ type Workspace @model {
   botUserId: String!
   botAccessToken: String!
   cache: AWSJSON
-  events: [Event!]! @connection(name: "WorkspaceEvents", keyField: "workspaceId")
   ranks: [Rank!]! @connection(name: "WorkspaceRanks", keyField: "workspaceId"),
-}
-
-type Event @model {
-  id: ID!
-  workspace: Workspace! @connection(name: "WorkspaceEvents", keyField: "workspaceId")
-  raw: AWSJSON!
 }
 
 type Rank @model {
