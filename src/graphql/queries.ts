@@ -49,10 +49,3 @@ export const listWorkspaces = `query ListWorkspaces(
   }
 }
 `;
-export const me = `query Me($cognitoId: ID!) {
-  me(cognitoId: $cognitoId) {
-    cognitoId
-    workspaceIds
-  }
-}
-`;

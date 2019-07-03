@@ -1,0 +1,15 @@
+{
+  "version" : "2017-02-28",
+  "operation" : "Scan",
+  "limit": #if(${context.arguments.count}) "${context.arguments.count}" #else 20 #end,
+  "nextToken": #if(${context.arguments.nextToken}) "${context.arguments.nextToken}" #else null #end,
+  "filter":{
+    "expression": "contains(#peopleCanAccess, :value)",
+    "expressionNames": {
+      "#peopleCanAccess": "registeredCognitoIds"
+    },
+    "expressionValues": {
+      ":value": { "S" : "${context.identity.sub}" }
+    }
+  }
+}

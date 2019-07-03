@@ -10,11 +10,6 @@ type Workspace @model (queries: {get: "getWorkspace", list: "listWorkspaces"}, m
   ranks: [Rank!]! @connection(name: "WorkspaceRanks", keyField: "workspaceId"),
 }
 
-type User @model (queries: {get: "me"}, mutations: null, subscriptions: null) @key(fields: ["cognitoId"]){
-  cognitoId: ID!
-  workspaceIds: [ID!]!
-}
-
 type State @model (queries: null, mutations: { create: "createState" }, subscriptions: null) {
   id: ID!
   redirectUrl: AWSURL!
