@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import Amplify, {graphqlOperation, I18n} from 'aws-amplify';
+import Amplify, {API, graphqlOperation, I18n} from 'aws-amplify';
 import awsmobile from './aws-exports';
 import {Connect, withAuthenticator} from 'aws-amplify-react';
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
@@ -10,18 +10,25 @@ import FtTop from "./routes/FtTop";
 import {Layout, Loading, Menu} from "element-react";
 import FtRank from "./routes/FtRank";
 import {listWorkspaces} from "./graphql/queries";
+import {createState} from "./graphql/mutations";
 const querystring = require('querystring');
 
 Amplify.configure(awsmobile);
 
 class App extends React.Component {
 
-    private onSelect(index: string) {
+    private async onSelect(index: string) {
         if (index === '0') {
+            const response = await API.graphql(
+                graphqlOperation(
+                    createState,
+                    { input: {redirectUrl: window.location.href}}
+                )
+            );
+            // @ts-ignore
+            const state = response.data.createState.id;
             const url = awsmobile.aws_cloud_logic_custom[1].endpoint + '/slack-authorize';
-            const query = querystring.stringify({
-                state:  window.location.href
-            });
+            const query = querystring.stringify({state});
             window.location.href = url + '?' + query;
         }
     }
