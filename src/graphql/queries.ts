@@ -9,7 +9,7 @@ export const getWorkspace = `query GetWorkspace($id: ID!) {
   getWorkspace(id: $id) {
     id
     name
-    registeredUserIds
+    registeredCognitoIds
     accessToken
     scope
     botUserId
@@ -18,8 +18,8 @@ export const getWorkspace = `query GetWorkspace($id: ID!) {
     ranks {
       items {
         id
-        emoji
-        users
+        userId
+        count
       }
       nextToken
     }
@@ -35,7 +35,7 @@ export const listWorkspaces = `query ListWorkspaces(
     items {
       id
       name
-      registeredUserIds
+      registeredCognitoIds
       accessToken
       scope
       botUserId
@@ -49,49 +49,10 @@ export const listWorkspaces = `query ListWorkspaces(
   }
 }
 `;
-export const getRank = `query GetRank($id: ID!) {
-  getRank(id: $id) {
-    id
-    workspace {
-      id
-      name
-      registeredUserIds
-      accessToken
-      scope
-      botUserId
-      botAccessToken
-      cache
-      ranks {
-        nextToken
-      }
-    }
-    emoji
-    users
-  }
-}
-`;
-export const listRanks = `query ListRanks(
-  $filter: ModelRankFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listRanks(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      workspace {
-        id
-        name
-        registeredUserIds
-        accessToken
-        scope
-        botUserId
-        botAccessToken
-        cache
-      }
-      emoji
-      users
-    }
-    nextToken
+export const me = `query Me($cognitoId: ID!) {
+  me(cognitoId: $cognitoId) {
+    cognitoId
+    workspaceIds
   }
 }
 `;

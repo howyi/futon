@@ -26,5 +26,3 @@ export default function FtRank(props: any) {
         </div>
     );
 };
-
-// export default FtRank;

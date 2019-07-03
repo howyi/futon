@@ -40,7 +40,7 @@ class App extends React.Component {
                                 <Menu.Item index="0" style={{backgroundColor: '#97a2fb', color: 'aliceblue'}}>Add Slack
                                     Workspace</Menu.Item>
                             </Menu>
-                            <Menu defaultActive="2" className="el-menu-vertical-demo" onSelect={this.onWorkspaceSelect.bind(this)} >
+                            <Menu defaultActive="2" onSelect={this.onWorkspaceSelect.bind(this)} >
                                 <Connect query={graphqlOperation(listWorkspaces)}>
                                     {({data: {listWorkspaces: workspaces}, loading, error}: any) => {
                                         if (error) {

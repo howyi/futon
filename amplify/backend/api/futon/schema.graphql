@@ -1,7 +1,7 @@
-type Workspace @model {
+type Workspace @model (queries: {get: "getWorkspace", list: "listWorkspaces"}, mutations: null, subscriptions: null) {
   id: ID!
   name: String!
-  registeredUserIds: [ID!]!
+  registeredCognitoIds: [ID!]!
   accessToken: String!
   scope: String!
   botUserId: String!
@@ -10,11 +10,21 @@ type Workspace @model {
   ranks: [Rank!]! @connection(name: "WorkspaceRanks", keyField: "workspaceId"),
 }
 
-type Rank @model {
+type User @model (queries: {get: "me"}, mutations: null, subscriptions: null) @key(fields: ["cognitoId"]){
+  cognitoId: ID!
+  workspaceIds: [ID!]!
+}
+
+type State @model (queries: null, mutations: { create: "createState" }, subscriptions: null) {
+  id: ID!
+  redirectUrl: AWSURL!
+}
+
+type Rank @model (queries: null, mutations: null, subscriptions: null) {
   id: ID!
   workspace: Workspace! @connection(name: "WorkspaceRanks", keyField: "workspaceId")
-  emoji: String!
-  users: AWSJSON!
+  userId: String!
+  count: Int!
 }
 
 type Query {

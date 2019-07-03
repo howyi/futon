@@ -28,11 +28,9 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 let workspaceTableName = 'Workspace-' + apiFutonGraphQLAPIIdOutput;
-let eventTableName = 'Event-' + apiFutonGraphQLAPIIdOutput;
 let rankTableName = 'Rank-' + apiFutonGraphQLAPIIdOutput;
 if(process.env.ENV && process.env.ENV !== "NONE") {
   workspaceTableName = workspaceTableName + '-' + process.env.ENV;
-  eventTableName = eventTableName + '-' + process.env.ENV;
   rankTableName = rankTableName + '-' + process.env.ENV;
 }
 
@@ -73,17 +71,17 @@ app.post('/slack/action-endpoint', async function(req, res) {
     switch(event.type) {
       case "reaction_added":
         await updateRank(
+            workspace,
             event.reaction,
             event.item_user,
-            req.body.team_id,
-            1
+            +1
         );
         break;
       case "reaction_removed":
         await updateRank(
+            workspace,
             event.reaction,
             event.item_user,
-            req.body.team_id,
             -1
         );
         break;
@@ -93,56 +91,53 @@ app.post('/slack/action-endpoint', async function(req, res) {
   }
 });
 
-async function updateRank(reaction, user_id, team_id, delta) {
+async function updateRank(workspace, reaction, user_id, delta) {
+  if (reaction !== 'pear') {
+    console.log('NOT PEAR');
+    return;
+  }
+
   const getParams = {
     TableName: rankTableName,
     Key:{
-      id: team_id + '/' + reaction
+      id: workspace.Item.id + '/' + user_id
     }
   };
 
   const rank = await dynamodb.get(getParams).promise();
 
+  console.log('aaa');
+  console.log(rank);
+  // TODO 定期的なキャッシュ更新
+
   if (!("Item" in rank)) {
     let purRankIncItemParams = {
       TableName: rankTableName,
       Item: {
-        id: team_id + '/' + reaction,
-        workspaceId: team_id,
-        emoji: reaction,
-        users: {},
+        id: workspace.Item.id + '/' + user_id,
+        workspaceId: workspace.Item.id,
+        userId: user_id,
+        count: delta,
       }
     };
     await dynamodb.put(purRankIncItemParams).promise();
-  }
-
-  let updateParams = {
-    TableName: rankTableName,
-    Key: {
-      "id": team_id + '/' + reaction
-    },
-    UpdateExpression: `set #usr.${user_id} = #usr.${user_id} + (:val)`,
-    ConditionExpression: `attribute_exists(#usr.${user_id})`,
-    ExpressionAttributeNames: {
-      "#usr": "users",
-    },
-    ExpressionAttributeValues: {
-      ":val": delta
-    },
-    ReturnValues: "UPDATED_NEW"
-  };
-
-  try {
+  } else {
+    let updateParams = {
+      TableName: rankTableName,
+      Key: {
+        "id": workspace.Item.id + '/' + user_id
+      },
+      UpdateExpression: `set #cnt = #cnt + (:val)`,
+      ExpressionAttributeNames: {
+        "#cnt": "count"
+      },
+      ExpressionAttributeValues: {
+        ":val": delta
+      },
+      ReturnValues: "UPDATED_NEW"
+    };
+    console.log(updateParams);
     await dynamodb.update(updateParams).promise();
-  } catch (e) {
-    if (e.code  === 'ConditionalCheckFailedException') {
-      updateParams.UpdateExpression = `set #usr.${user_id} = :val`;
-      updateParams.ReturnValues = "UPDATED_NEW";
-      delete updateParams.ConditionExpression;
-      await dynamodb.update(updateParams).promise();
-    } else {
-      throw e;
-    }
   }
 }
 

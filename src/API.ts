@@ -4,18 +4,18 @@
 export type CreateWorkspaceInput = {
   id?: string | null,
   name: string,
-  registeredUserIds: Array< string >,
+  registeredCognitoIds: Array< string >,
   accessToken: string,
   scope: string,
   botUserId: string,
   botAccessToken: string,
-  cache?: string | null,
+  cache: string,
 };
 
 export type UpdateWorkspaceInput = {
   id: string,
   name?: string | null,
-  registeredUserIds?: Array< string > | null,
+  registeredCognitoIds?: Array< string > | null,
   accessToken?: string | null,
   scope?: string | null,
   botUserId?: string | null,
@@ -27,17 +27,33 @@ export type DeleteWorkspaceInput = {
   id?: string | null,
 };
 
+export type CreateStateInput = {
+  id?: string | null,
+  cognitoId: string,
+  redirectUrl: string,
+};
+
+export type UpdateStateInput = {
+  id: string,
+  cognitoId?: string | null,
+  redirectUrl?: string | null,
+};
+
+export type DeleteStateInput = {
+  id?: string | null,
+};
+
 export type CreateRankInput = {
   id?: string | null,
-  emoji: string,
-  users: string,
+  userId: string,
+  count: number,
   workspaceId: string,
 };
 
 export type UpdateRankInput = {
   id: string,
-  emoji?: string | null,
-  users?: string | null,
+  userId?: string | null,
+  count?: number | null,
   workspaceId?: string | null,
 };
 
@@ -48,7 +64,7 @@ export type DeleteRankInput = {
 export type ModelWorkspaceFilterInput = {
   id?: ModelIDFilterInput | null,
   name?: ModelStringFilterInput | null,
-  registeredUserIds?: ModelIDFilterInput | null,
+  registeredCognitoIds?: ModelIDFilterInput | null,
   accessToken?: ModelStringFilterInput | null,
   scope?: ModelStringFilterInput | null,
   botUserId?: ModelStringFilterInput | null,
@@ -85,13 +101,34 @@ export type ModelStringFilterInput = {
   beginsWith?: string | null,
 };
 
+export type ModelStateFilterInput = {
+  id?: ModelIDFilterInput | null,
+  cognitoId?: ModelIDFilterInput | null,
+  redirectUrl?: ModelStringFilterInput | null,
+  and?: Array< ModelStateFilterInput | null > | null,
+  or?: Array< ModelStateFilterInput | null > | null,
+  not?: ModelStateFilterInput | null,
+};
+
 export type ModelRankFilterInput = {
   id?: ModelIDFilterInput | null,
-  emoji?: ModelStringFilterInput | null,
-  users?: ModelStringFilterInput | null,
+  userId?: ModelStringFilterInput | null,
+  count?: ModelIntFilterInput | null,
   and?: Array< ModelRankFilterInput | null > | null,
   or?: Array< ModelRankFilterInput | null > | null,
   not?: ModelRankFilterInput | null,
+};
+
+export type ModelIntFilterInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  contains?: number | null,
+  notContains?: number | null,
+  between?: Array< number | null > | null,
 };
 
 export type CreateWorkspaceMutationVariables = {
@@ -103,19 +140,19 @@ export type CreateWorkspaceMutation = {
     __typename: "Workspace",
     id: string,
     name: string,
-    registeredUserIds: Array< string >,
+    registeredCognitoIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
     botAccessToken: string,
-    cache: string | null,
+    cache: string,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        emoji: string,
-        users: string,
+        userId: string,
+        count: number,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -131,19 +168,19 @@ export type UpdateWorkspaceMutation = {
     __typename: "Workspace",
     id: string,
     name: string,
-    registeredUserIds: Array< string >,
+    registeredCognitoIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
     botAccessToken: string,
-    cache: string | null,
+    cache: string,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        emoji: string,
-        users: string,
+        userId: string,
+        count: number,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -159,22 +196,61 @@ export type DeleteWorkspaceMutation = {
     __typename: "Workspace",
     id: string,
     name: string,
-    registeredUserIds: Array< string >,
+    registeredCognitoIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
     botAccessToken: string,
-    cache: string | null,
+    cache: string,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        emoji: string,
-        users: string,
+        userId: string,
+        count: number,
       } | null > | null,
       nextToken: string | null,
     } | null,
+  } | null,
+};
+
+export type CreateStateMutationVariables = {
+  input: CreateStateInput,
+};
+
+export type CreateStateMutation = {
+  createState:  {
+    __typename: "State",
+    id: string,
+    cognitoId: string,
+    redirectUrl: string,
+  } | null,
+};
+
+export type UpdateStateMutationVariables = {
+  input: UpdateStateInput,
+};
+
+export type UpdateStateMutation = {
+  updateState:  {
+    __typename: "State",
+    id: string,
+    cognitoId: string,
+    redirectUrl: string,
+  } | null,
+};
+
+export type DeleteStateMutationVariables = {
+  input: DeleteStateInput,
+};
+
+export type DeleteStateMutation = {
+  deleteState:  {
+    __typename: "State",
+    id: string,
+    cognitoId: string,
+    redirectUrl: string,
   } | null,
 };
 
@@ -190,19 +266,19 @@ export type CreateRankMutation = {
       __typename: "Workspace",
       id: string,
       name: string,
-      registeredUserIds: Array< string >,
+      registeredCognitoIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
       botAccessToken: string,
-      cache: string | null,
+      cache: string,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    emoji: string,
-    users: string,
+    userId: string,
+    count: number,
   } | null,
 };
 
@@ -218,19 +294,19 @@ export type UpdateRankMutation = {
       __typename: "Workspace",
       id: string,
       name: string,
-      registeredUserIds: Array< string >,
+      registeredCognitoIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
       botAccessToken: string,
-      cache: string | null,
+      cache: string,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    emoji: string,
-    users: string,
+    userId: string,
+    count: number,
   } | null,
 };
 
@@ -246,19 +322,19 @@ export type DeleteRankMutation = {
       __typename: "Workspace",
       id: string,
       name: string,
-      registeredUserIds: Array< string >,
+      registeredCognitoIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
       botAccessToken: string,
-      cache: string | null,
+      cache: string,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    emoji: string,
-    users: string,
+    userId: string,
+    count: number,
   } | null,
 };
 
@@ -279,19 +355,19 @@ export type GetWorkspaceQuery = {
     __typename: "Workspace",
     id: string,
     name: string,
-    registeredUserIds: Array< string >,
+    registeredCognitoIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
     botAccessToken: string,
-    cache: string | null,
+    cache: string,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        emoji: string,
-        users: string,
+        userId: string,
+        count: number,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -311,16 +387,48 @@ export type ListWorkspacesQuery = {
       __typename: "Workspace",
       id: string,
       name: string,
-      registeredUserIds: Array< string >,
+      registeredCognitoIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
       botAccessToken: string,
-      cache: string | null,
+      cache: string,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetStateQueryVariables = {
+  id: string,
+};
+
+export type GetStateQuery = {
+  getState:  {
+    __typename: "State",
+    id: string,
+    cognitoId: string,
+    redirectUrl: string,
+  } | null,
+};
+
+export type ListStatesQueryVariables = {
+  filter?: ModelStateFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListStatesQuery = {
+  listStates:  {
+    __typename: "ModelStateConnection",
+    items:  Array< {
+      __typename: "State",
+      id: string,
+      cognitoId: string,
+      redirectUrl: string,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -338,19 +446,19 @@ export type GetRankQuery = {
       __typename: "Workspace",
       id: string,
       name: string,
-      registeredUserIds: Array< string >,
+      registeredCognitoIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
       botAccessToken: string,
-      cache: string | null,
+      cache: string,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    emoji: string,
-    users: string,
+    userId: string,
+    count: number,
   } | null,
 };
 
@@ -370,15 +478,15 @@ export type ListRanksQuery = {
         __typename: "Workspace",
         id: string,
         name: string,
-        registeredUserIds: Array< string >,
+        registeredCognitoIds: Array< string >,
         accessToken: string,
         scope: string,
         botUserId: string,
         botAccessToken: string,
-        cache: string | null,
+        cache: string,
       },
-      emoji: string,
-      users: string,
+      userId: string,
+      count: number,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -389,19 +497,19 @@ export type OnCreateWorkspaceSubscription = {
     __typename: "Workspace",
     id: string,
     name: string,
-    registeredUserIds: Array< string >,
+    registeredCognitoIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
     botAccessToken: string,
-    cache: string | null,
+    cache: string,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        emoji: string,
-        users: string,
+        userId: string,
+        count: number,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -413,19 +521,19 @@ export type OnUpdateWorkspaceSubscription = {
     __typename: "Workspace",
     id: string,
     name: string,
-    registeredUserIds: Array< string >,
+    registeredCognitoIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
     botAccessToken: string,
-    cache: string | null,
+    cache: string,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        emoji: string,
-        users: string,
+        userId: string,
+        count: number,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -437,22 +545,49 @@ export type OnDeleteWorkspaceSubscription = {
     __typename: "Workspace",
     id: string,
     name: string,
-    registeredUserIds: Array< string >,
+    registeredCognitoIds: Array< string >,
     accessToken: string,
     scope: string,
     botUserId: string,
     botAccessToken: string,
-    cache: string | null,
+    cache: string,
     ranks:  {
       __typename: "ModelRankConnection",
       items:  Array< {
         __typename: "Rank",
         id: string,
-        emoji: string,
-        users: string,
+        userId: string,
+        count: number,
       } | null > | null,
       nextToken: string | null,
     } | null,
+  } | null,
+};
+
+export type OnCreateStateSubscription = {
+  onCreateState:  {
+    __typename: "State",
+    id: string,
+    cognitoId: string,
+    redirectUrl: string,
+  } | null,
+};
+
+export type OnUpdateStateSubscription = {
+  onUpdateState:  {
+    __typename: "State",
+    id: string,
+    cognitoId: string,
+    redirectUrl: string,
+  } | null,
+};
+
+export type OnDeleteStateSubscription = {
+  onDeleteState:  {
+    __typename: "State",
+    id: string,
+    cognitoId: string,
+    redirectUrl: string,
   } | null,
 };
 
@@ -464,19 +599,19 @@ export type OnCreateRankSubscription = {
       __typename: "Workspace",
       id: string,
       name: string,
-      registeredUserIds: Array< string >,
+      registeredCognitoIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
       botAccessToken: string,
-      cache: string | null,
+      cache: string,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    emoji: string,
-    users: string,
+    userId: string,
+    count: number,
   } | null,
 };
 
@@ -488,19 +623,19 @@ export type OnUpdateRankSubscription = {
       __typename: "Workspace",
       id: string,
       name: string,
-      registeredUserIds: Array< string >,
+      registeredCognitoIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
       botAccessToken: string,
-      cache: string | null,
+      cache: string,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    emoji: string,
-    users: string,
+    userId: string,
+    count: number,
   } | null,
 };
 
@@ -512,18 +647,18 @@ export type OnDeleteRankSubscription = {
       __typename: "Workspace",
       id: string,
       name: string,
-      registeredUserIds: Array< string >,
+      registeredCognitoIds: Array< string >,
       accessToken: string,
       scope: string,
       botUserId: string,
       botAccessToken: string,
-      cache: string | null,
+      cache: string,
       ranks:  {
         __typename: "ModelRankConnection",
         nextToken: string | null,
       } | null,
     },
-    emoji: string,
-    users: string,
+    userId: string,
+    count: number,
   } | null,
 };

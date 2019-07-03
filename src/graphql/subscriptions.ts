@@ -5,7 +5,7 @@ export const onCreateWorkspace = `subscription OnCreateWorkspace {
   onCreateWorkspace {
     id
     name
-    registeredUserIds
+    registeredCognitoIds
     accessToken
     scope
     botUserId
@@ -14,8 +14,8 @@ export const onCreateWorkspace = `subscription OnCreateWorkspace {
     ranks {
       items {
         id
-        emoji
-        users
+        userId
+        count
       }
       nextToken
     }
@@ -26,7 +26,7 @@ export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
   onUpdateWorkspace {
     id
     name
-    registeredUserIds
+    registeredCognitoIds
     accessToken
     scope
     botUserId
@@ -35,8 +35,8 @@ export const onUpdateWorkspace = `subscription OnUpdateWorkspace {
     ranks {
       items {
         id
-        emoji
-        users
+        userId
+        count
       }
       nextToken
     }
@@ -47,7 +47,7 @@ export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
   onDeleteWorkspace {
     id
     name
-    registeredUserIds
+    registeredCognitoIds
     accessToken
     scope
     botUserId
@@ -56,11 +56,35 @@ export const onDeleteWorkspace = `subscription OnDeleteWorkspace {
     ranks {
       items {
         id
-        emoji
-        users
+        userId
+        count
       }
       nextToken
     }
+  }
+}
+`;
+export const onCreateState = `subscription OnCreateState {
+  onCreateState {
+    id
+    cognitoId
+    redirectUrl
+  }
+}
+`;
+export const onUpdateState = `subscription OnUpdateState {
+  onUpdateState {
+    id
+    cognitoId
+    redirectUrl
+  }
+}
+`;
+export const onDeleteState = `subscription OnDeleteState {
+  onDeleteState {
+    id
+    cognitoId
+    redirectUrl
   }
 }
 `;
@@ -70,7 +94,7 @@ export const onCreateRank = `subscription OnCreateRank {
     workspace {
       id
       name
-      registeredUserIds
+      registeredCognitoIds
       accessToken
       scope
       botUserId
@@ -80,8 +104,8 @@ export const onCreateRank = `subscription OnCreateRank {
         nextToken
       }
     }
-    emoji
-    users
+    userId
+    count
   }
 }
 `;
@@ -91,7 +115,7 @@ export const onUpdateRank = `subscription OnUpdateRank {
     workspace {
       id
       name
-      registeredUserIds
+      registeredCognitoIds
       accessToken
       scope
       botUserId
@@ -101,8 +125,8 @@ export const onUpdateRank = `subscription OnUpdateRank {
         nextToken
       }
     }
-    emoji
-    users
+    userId
+    count
   }
 }
 `;
@@ -112,7 +136,7 @@ export const onDeleteRank = `subscription OnDeleteRank {
     workspace {
       id
       name
-      registeredUserIds
+      registeredCognitoIds
       accessToken
       scope
       botUserId
@@ -122,8 +146,8 @@ export const onDeleteRank = `subscription OnDeleteRank {
         nextToken
       }
     }
-    emoji
-    users
+    userId
+    count
   }
 }
 `;

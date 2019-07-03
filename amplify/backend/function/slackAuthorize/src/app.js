@@ -87,7 +87,7 @@ app.get('/slack-authorize/callback', async function(req, res) {
         Item: {
             id: slackData.team_id,
             name: slackData.team_name,
-            registeredUserIds: [],
+            registeredCognitoIds: [],
             accessToken: slackData.access_token,
             scope: slackData.scope,
             botUserId: slackData.bot.bot_user_id,
