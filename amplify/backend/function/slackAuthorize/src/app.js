@@ -106,7 +106,7 @@ app.get('/slack-authorize/callback', async function(req, res) {
     }).promise());
 
     if ("Item" in workspace && workspace.Item.registeredCognitoIds.length !== 0) {
-        registeredCognitoIds.push(workspace.Item.registeredCognitoIds)
+        registeredCognitoIds = Array.from(new Set(registeredCognitoIds.concat(workspace.Item.registeredCognitoIds)));
     }
 
     let putWorkspaceItemParams = {
