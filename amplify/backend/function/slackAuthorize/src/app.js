@@ -30,8 +30,10 @@ var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware'
 
 var apiFutonGraphQLAPIIdOutput = process.env.API_FUTON_GRAPHQLAPIIDOUTPUT;
 let workspaceTableName = 'Workspace-' + apiFutonGraphQLAPIIdOutput;
+let stateTableName = 'State-' + apiFutonGraphQLAPIIdOutput;
 if(process.env.ENV && process.env.ENV !== "NONE") {
     workspaceTableName = workspaceTableName + '-' + process.env.ENV;
+    stateTableName = stateTableName + '-' + process.env.ENV;
 }
 
 // declare a new express app
@@ -47,6 +49,18 @@ app.use(function(req, res, next) {
 });
 
 app.get('/slack-authorize/callback', async function(req, res) {
+
+    const state = (await dynamodb.get({
+        TableName: stateTableName,
+        Key:{
+            id: req.query.state
+        }
+    }).promise());
+
+    if (!("Item" in state)) {
+        return res.json({error: 'state not found'});
+    }
+
     if ("error" in req.query && req.query.error === 'access_denied') {
         const query = querystring.stringify({state: 'canceled'});
         return res.redirect(req.query.state + '?' + query);
@@ -82,12 +96,25 @@ app.get('/slack-authorize/callback', async function(req, res) {
 
     const cache = {team, users, emoji};
 
+    let registeredCognitoIds = [state.Item.cognitoId];
+
+    const workspace = (await dynamodb.get({
+        TableName: workspaceTableName,
+        Key:{
+            id: slackData.team_id
+        }
+    }).promise());
+
+    if ("Item" in workspace && workspace.Item.registeredCognitoIds.length !== 0) {
+        registeredCognitoIds.push(workspace.Item.registeredCognitoIds)
+    }
+
     let putWorkspaceItemParams = {
         TableName: workspaceTableName,
         Item: {
             id: slackData.team_id,
             name: slackData.team_name,
-            registeredCognitoIds: [],
+            registeredCognitoIds,
             accessToken: slackData.access_token,
             scope: slackData.scope,
             botUserId: slackData.bot.bot_user_id,
@@ -105,7 +132,7 @@ app.get('/slack-authorize/callback', async function(req, res) {
     });
 
     const query = querystring.stringify({state: 'added'});
-    return res.redirect(req.query.state + '?' + query);
+    return res.redirect(state.Item.redirectUrl + '?' + query);
 });
 
 app.get('/slack-authorize', async function(req, res) {
