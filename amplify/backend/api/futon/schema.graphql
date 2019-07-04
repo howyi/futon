@@ -1,17 +1,18 @@
 type Workspace @model (queries: {get: "getWorkspace", list: "listWorkspaces"}, mutations: null, subscriptions: null) {
   id: ID!
   name: String!
-  registeredCognitoIds: [ID!]!
-  accessToken: String!
-  scope: String!
+#  registeredCognitoIds: [ID!]!
+#  accessToken: String!
+#  scope: String!
   botUserId: String!
-  botAccessToken: String!
+#  botAccessToken: String!
   cache: AWSJSON!
   ranks: [Rank!]! @connection(name: "WorkspaceRanks", keyField: "workspaceId"),
 }
 
 type State @model (queries: null, mutations: { create: "createState" }, subscriptions: null) {
   id: ID!
+#  cognitoId: ID!
   redirectUrl: AWSURL!
 }
 

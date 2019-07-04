@@ -1,0 +1,13 @@
+#set($permissions = $context.result.registeredCognitoIds)
+
+#foreach($per in $permissions)
+    #if($per == ${context.identity.sub})
+        #set($hasPermission = true)
+    #end
+#end
+
+#if($hasPermission)
+    $utils.toJson($context.result)
+#else
+    $utils.unauthorized()
+#end

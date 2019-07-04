@@ -9,11 +9,7 @@ export const getWorkspace = `query GetWorkspace($id: ID!) {
   getWorkspace(id: $id) {
     id
     name
-    registeredCognitoIds
-    accessToken
-    scope
     botUserId
-    botAccessToken
     cache
     ranks {
       items {
@@ -35,11 +31,7 @@ export const listWorkspaces = `query ListWorkspaces(
     items {
       id
       name
-      registeredCognitoIds
-      accessToken
-      scope
       botUserId
-      botAccessToken
       cache
       ranks {
         nextToken
