@@ -22,7 +22,7 @@ class App extends React.Component {
             const response = await API.graphql(
                 graphqlOperation(
                     createState,
-                    { input: {redirectUrl: window.location.href}}
+                    { input: {redirectUrl: window.location.href.replace(/\?.*$/,"")}}
                 )
             );
             // @ts-ignore

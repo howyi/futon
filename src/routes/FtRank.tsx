@@ -4,6 +4,7 @@ import {Loading} from "element-react";
 import {Connect} from "aws-amplify-react";
 import {graphqlOperation, I18n} from "aws-amplify";
 import FtRanking from "../components/FtRanking";
+import { Redirect } from 'react-router-dom'
 
 export default function FtRank(props: any) {
     return (
@@ -13,8 +14,11 @@ export default function FtRank(props: any) {
                     if (error) {
                         return <h3><span role='img' aria-label='sob'>😭</span></h3>;
                     }
-                    if (loading || !workspace) {
+                    if (loading) {
                         return <Loading text={I18n.get('Loading ...')}/>;
+                    }
+                    if (!workspace) {
+                        return <Redirect to={'/?state=notfound'}/>
                     }
                     return (
                         <div>
