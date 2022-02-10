@@ -11,7 +11,7 @@
     "aws-amplify-react": "^2.3.8",
     "element-react": "^1.4.34",
     "element-theme-chalk": "^2.9.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.5.3",
